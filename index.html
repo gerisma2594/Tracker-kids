@@ -10,7 +10,6 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-serif;background:#FFF9F0;min-height:100vh;overflow-x:hidden;}
 
-/* AUTH SCREEN */
 .auth-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#FF6B6B22,#4ECDC422);}
 .auth-logo{font-size:3rem;margin-bottom:8px;}
 .auth-title{font-family:‘Fredoka One’,cursive;font-size:2rem;color:#FF6B6B;margin-bottom:4px;}
@@ -22,52 +21,43 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
 .auth-input{width:100%;padding:12px 14px;border:2px solid #eee;border-radius:14px;font-family:‘Nunito’,sans-serif;font-size:.95rem;outline:none;margin-bottom:12px;transition:border-color .2s;}
 .auth-input:focus{border-color:#FF6B6B;}
 .auth-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-family:‘Fredoka One’,cursive;font-size:1.1rem;cursor:pointer;transition:all .2s;margin-top:4px;}
-.auth-btn:hover{transform:scale(1.02);}
-.auth-btn:disabled{opacity:.6;transform:none;}
+.auth-btn:disabled{opacity:.6;}
 .auth-error{color:#FF6B6B;font-size:.8rem;font-weight:700;margin-bottom:10px;text-align:center;min-height:18px;}
 .auth-divider{text-align:center;color:#ccc;font-size:.8rem;font-weight:700;margin:12px 0;}
+.google-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#4ECDC4,#45B7D1);color:#fff;font-family:‘Fredoka One’,cursive;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
 
-/* MAIN APP */
-.app-wrap{display:none;}
-.app-header{background:linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#4ECDC4);padding:14px 16px 18px;position:relative;overflow:hidden;}
-.app-header::before{content:’’;position:absolute;inset:0;background:url(“data:image/svg+xml,%3Csvg width=‘40’ height=‘40’ viewBox=‘0 0 40 40’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cg fill=’%23fff’ fill-opacity=‘0.07’%3E%3Cpath d=‘M20 20.5V18H0v5h20v20.5h5V23h20v-5H25V2.5h-5z’/%3E%3C/g%3E%3C/svg%3E”);}
-.header-row{display:flex;align-items:center;justify-content:space-between;position:relative;}
-.header-title{font-family:‘Fredoka One’,cursive;font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.1);}
-.header-user{display:flex;align-items:center;gap:8px;}
-.user-email{color:rgba(255,255,255,.85);font-size:.7rem;font-weight:800;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:.7rem;font-weight:800;padding:5px 10px;border-radius:10px;cursor:pointer;}
-
-/* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:1px solid #eee;display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.08);}
-.nav-btn{flex:1;padding:10px 4px 8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:‘Nunito’,sans-serif;font-size:.62rem;font-weight:800;color:#bbb;transition:color .2s;}
-.nav-btn.active{color:#FF6B6B;}
-.nav-icon{font-size:1.3rem;}
-
-/* PAGES */
-.page{display:none;padding-bottom:80px;}
-.page.active{display:block;}
-
-/* LOADING */
 .loading-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
 .spinner{width:40px;height:40px;border:4px solid #eee;border-top-color:#FF6B6B;border-radius:50%;animation:spin 1s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loading-screen p{font-family:‘Fredoka One’,cursive;color:#aaa;font-size:1rem;}
 
-/* KIDS TABS */
+.app-wrap{display:none;}
+.app-header{background:linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#4ECDC4);padding:14px 16px 18px;position:relative;overflow:hidden;}
+.app-header::before{content:’’;position:absolute;inset:0;background:url(“data:image/svg+xml,%3Csvg width=‘40’ height=‘40’ viewBox=‘0 0 40 40’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cg fill=’%23fff’ fill-opacity=‘0.07’%3E%3Cpath d=‘M20 20.5V18H0v5h20v20.5h5V23h20v-5H25V2.5h-5z’/%3E%3C/g%3E%3C/svg%3E”);}
+.header-row{display:flex;align-items:center;justify-content:space-between;position:relative;}
+.header-title{font-family:‘Fredoka One’,cursive;font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.1);}
+.user-email{color:rgba(255,255,255,.85);font-size:.7rem;font-weight:800;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:.7rem;font-weight:800;padding:5px 10px;border-radius:10px;cursor:pointer;}
+
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:1px solid #eee;display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.08);}
+.nav-btn{flex:1;padding:10px 4px 8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:‘Nunito’,sans-serif;font-size:.62rem;font-weight:800;color:#bbb;transition:color .2s;}
+.nav-btn.active{color:#FF6B6B;}
+.nav-icon{font-size:1.3rem;}
+
+.page{display:none;padding-bottom:80px;}
+.page.active{display:block;}
+
 .kids-tabs{display:flex;gap:0;overflow-x:auto;padding:12px 12px 0;scrollbar-width:none;}
 .kids-tabs::-webkit-scrollbar{display:none;}
 .kid-tab{flex-shrink:0;padding:10px 14px;border:none;border-radius:14px 14px 0 0;font-family:‘Fredoka One’,cursive;font-size:.85rem;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#999;display:flex;align-items:center;gap:6px;}
 .kid-tab.active{color:#fff;transform:translateY(-2px);box-shadow:0 -3px 10px rgba(0,0,0,.12);}
 .add-kid-tab{flex-shrink:0;padding:10px 14px;border:2px dashed #ddd;border-radius:14px 14px 0 0;background:none;cursor:pointer;font-size:1.2rem;color:#ccc;}
 
-/* TRACKER CARD */
 .tracker-card{margin:0 12px;border-radius:0 0 20px 20px;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.1);}
 .week-bar{display:flex;gap:5px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
 .week-bar::-webkit-scrollbar{display:none;}
 .week-btn{flex-shrink:0;padding:6px 12px;border-radius:18px;border:2px solid transparent;font-family:‘Fredoka One’,cursive;font-size:.78rem;cursor:pointer;background:#f0f0f0;color:#999;transition:all .2s;}
-.week-btn.sel{color:#fff;}
 
-/* DAY ACCORDION */
 .day-block{margin-bottom:8px;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);}
 .day-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;background:#fff;}
 .day-badge{font-family:‘Fredoka One’,cursive;font-size:.75rem;color:#fff;padding:3px 10px;border-radius:12px;}
@@ -76,7 +66,7 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
 .day-block.open .day-arrow{transform:rotate(180deg);}
 .day-tasks{display:none;background:#fafafa;}
 .day-block.open .day-tasks{display:block;}
-.task-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .15s;user-select:none;}
+.task-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;user-select:none;}
 .task-row:last-child{border-bottom:none;}
 .task-row.done{background:#fefefe;}
 .t-icon{font-size:1.3rem;min-width:28px;text-align:center;}
@@ -85,7 +75,6 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
 .check-box{width:26px;height:26px;border-radius:50%;border:2.5px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;transition:all .2s;}
 .check-box.on{color:#fff;}
 
-/* SUMMARY */
 .week-summary{background:#fff;border-radius:18px;padding:16px;margin:12px 12px 0;box-shadow:0 4px 16px rgba(0,0,0,.07);}
 .sum-title{font-family:‘Fredoka One’,cursive;font-size:1rem;margin-bottom:12px;}
 .day-chips{display:flex;gap:4px;margin-bottom:12px;}
@@ -104,7 +93,6 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
 .achieve.show{display:block;animation:pop .4s ease;}
 @keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 
-/* SETTINGS */
 .settings-header{padding:16px;font-family:‘Fredoka One’,cursive;font-size:1.2rem;color:#444;}
 .kids-list{padding:0 12px;}
 .kid-card-settings{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,.07);}
@@ -128,7 +116,6 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
 .add-kid-big-btn{display:block;width:calc(100% - 24px);margin:0 12px 16px;padding:14px;border:2.5px dashed #ddd;border-radius:18px;background:none;font-family:‘Fredoka One’,cursive;font-size:1rem;color:#aaa;cursor:pointer;text-align:center;}
 .save-settings-btn{display:block;width:calc(100% - 24px);margin:0 12px 16px;padding:14px;border:none;border-radius:18px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-family:‘Fredoka One’,cursive;font-size:1rem;cursor:pointer;text-align:center;}
 
-/* EMOJI MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:200;}
 .modal-bg.open{display:flex;}
 .emoji-modal{background:#fff;border-radius:24px 24px 0 0;padding:20px;width:100%;max-width:430px;max-height:70vh;overflow-y:auto;animation:slideUp .3s ease;}
@@ -138,11 +125,8 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
 .e-btn{font-size:1.4rem;width:38px;height:38px;border-radius:10px;border:none;background:#f5f5f5;cursor:pointer;}
 .modal-close{width:100%;padding:12px;border:none;border-radius:14px;background:#f0f0f0;font-family:‘Fredoka One’,cursive;font-size:1rem;color:#666;cursor:pointer;margin-top:12px;}
 
-/* TOAST */
 .save-toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 18px;border-radius:20px;font-size:.8rem;font-weight:800;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
 .save-toast.show{opacity:1;}
-
-/* CONFETTI */
 .confetti-p{position:fixed;width:9px;height:9px;top:-20px;animation:cf 1.4s ease-in forwards;border-radius:2px;z-index:999;pointer-events:none;}
 @keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 </style>
@@ -150,14 +134,10 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
 </head>
 <body>
 
-<!-- LOADING -->
-
 <div class="loading-screen" id="loading-screen">
   <div class="spinner"></div>
   <p>Loading your tracker...</p>
 </div>
-
-<!-- AUTH SCREEN -->
 
 <div class="auth-screen" id="auth-screen" style="display:none;">
   <div class="auth-logo">⭐</div>
@@ -176,38 +156,33 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
     </div>
     <button class="auth-btn" id="auth-submit-btn" onclick="handleAuth()">🚀 Login</button>
     <div class="auth-divider">— or —</div>
-    <button class="auth-btn" style="background:linear-gradient(135deg,#4ECDC4,#45B7D1)" onclick="handleGoogle()">
-      🔑 Continue with Google
+    <button class="google-btn" onclick="handleGoogle()">
+      <span>🔑</span><span>Continue with Google</span>
     </button>
   </div>
 </div>
-
-<!-- MAIN APP -->
 
 <div class="app-wrap" id="app-wrap">
   <div class="app-header">
     <div class="header-row">
       <div class="header-title">⭐ Mission Tracker</div>
-      <div class="header-user">
+      <div style="display:flex;align-items:center;gap:8px;">
         <span class="user-email" id="user-email-display"></span>
         <button class="logout-btn" onclick="handleLogout()">Logout</button>
       </div>
     </div>
   </div>
-
   <div class="page active" id="page-tracker">
     <div class="kids-tabs" id="kids-tabs"></div>
     <div id="tracker-card-wrap"></div>
     <div id="week-summary-wrap"></div>
   </div>
-
   <div class="page" id="page-settings">
     <div class="settings-header">⚙️ Customize Kids</div>
     <div class="kids-list" id="settings-kids-list"></div>
     <button class="add-kid-big-btn" onclick="addKid()">➕ Add Another Child</button>
     <button class="save-settings-btn" onclick="saveToCloud()">☁️ Save Everything to Cloud</button>
   </div>
-
   <div class="bottom-nav">
     <button class="nav-btn active" id="nav-tracker" onclick="showPage('tracker')">
       <span class="nav-icon">📋</span>Tracker
@@ -218,8 +193,6 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
   </div>
 </div>
 
-<!-- EMOJI MODAL -->
-
 <div class="modal-bg" id="emoji-modal-bg">
   <div class="emoji-modal">
     <h3>Pick an Emoji</h3>
@@ -228,13 +201,11 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
   </div>
 </div>
 
-<div class="save-toast" id="save-toast">✅ Saved to cloud!</div>
-
-<!-- FIREBASE -->
+<div class="save-toast" id="save-toast">✅ Saved!</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -251,19 +222,28 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Expose to window
 window._auth = auth;
 window._db = db;
 window._googleProvider = googleProvider;
 window._createUser = createUserWithEmailAndPassword;
 window._signIn = signInWithEmailAndPassword;
 window._signOut = signOut;
-window._googleSignIn = signInWithPopup;
+window._googleSignIn = signInWithRedirect; // ✅ FIXED: redirect instead of popup
 window._getDoc = getDoc;
 window._setDoc = setDoc;
 window._doc = doc;
 
-// Auth state listener
+// ✅ Handle Google redirect result when page loads
+try {
+  const result = await getRedirectResult(auth);
+  if (result && result.user) {
+    console.log('Google sign in successful');
+  }
+} catch(e) {
+  console.error('Redirect error:', e);
+  document.getElementById('auth-error').textContent = 'Google login failed. Try email instead.';
+}
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     window.currentUser = user;
@@ -308,7 +288,6 @@ window.loadFromCloud = loadFromCloud;
 </script>
 
 <script>
-// ── DATA ──
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const WEEKS = 5;
 const ALL_EMOJIS = ['⭐','📚','🏃','🧹','🍎','🎨','🎵','💪','🧼','🛏','🥗','🎮','📖','🌿','🧘','✏️','🐶','🎯','💧','🦷','⏰','🎒','😴','🚿','🧺','🏊','🚴','🍳','🧩','🎪','🌟','🏆','🎁','🌈','🦋','🐝','🌸','🍕','🥤','🧁','🎭','🎬','🎤','🎻','🥁','🏋️','🤸','⚽','🏀','🎾','🧲','🔬','🌍','🚀','✈️','🏖','🏔','🎡','🎢','🎠','🦄','🐯','🦊','🐼','🐨','🐸','🦅','🐬','🦁','🐧','🐙'];
@@ -323,7 +302,6 @@ const PALETTE = [
   {name:'Pink',   main:'#FF6B9D',light:'#FFE5F0',dark:'#B03060',grad:'#FF6B9D,#FFC0CB'},
   {name:'Yellow', main:'#F1C40F',light:'#FEF9E7',dark:'#9A7D0A',grad:'#F1C40F,#FFEAA7'},
 ];
-
 const DEFAULT_TASKS = [
   {icon:'⏰',name:'Wake up on time'},
   {icon:'🦷',name:'Brush teeth'},
@@ -343,197 +321,184 @@ function defaultKids() {
   ];
 }
 
-let state = { kids:[], checks:{}, currentKid:0, currentWeek:{} };
+let state = {kids:[],checks:{},currentKid:0,currentWeek:{}};
 let openDays = {};
 let emojiCallback = null;
 
 function fixState() {
   state.kids.forEach(kid => {
-    if (!state.checks[kid.id]) state.checks[kid.id] = {};
-    if (!state.currentWeek[kid.id]) state.currentWeek[kid.id] = 1;
-    for (let w=1;w<=WEEKS;w++) {
-      if (!state.checks[kid.id][w]) state.checks[kid.id][w] = {};
-      for (let d=0;d<7;d++) {
-        const need = kid.tasks.length;
-        if (!state.checks[kid.id][w][d]) state.checks[kid.id][w][d] = new Array(need).fill(false);
-        while (state.checks[kid.id][w][d].length < need) state.checks[kid.id][w][d].push(false);
+    if (!state.checks[kid.id]) state.checks[kid.id]={};
+    if (!state.currentWeek[kid.id]) state.currentWeek[kid.id]=1;
+    for(let w=1;w<=WEEKS;w++){
+      if(!state.checks[kid.id][w]) state.checks[kid.id][w]={};
+      for(let d=0;d<7;d++){
+        const need=kid.tasks.length;
+        if(!state.checks[kid.id][w][d]) state.checks[kid.id][w][d]=new Array(need).fill(false);
+        while(state.checks[kid.id][w][d].length<need) state.checks[kid.id][w][d].push(false);
       }
     }
   });
-  if (!state.kids[state.currentKid]) state.currentKid = 0;
+  if(!state.kids[state.currentKid]) state.currentKid=0;
 }
 
-// ── CLOUD SAVE ──
 async function saveToCloud() {
-  if (!window.currentUser) return;
+  if(!window.currentUser) return;
   try {
-    const ref = window._doc(window._db, 'users', window.currentUser.uid);
-    await window._setDoc(ref, { kids: state.kids, checks: state.checks, currentWeek: state.currentWeek });
+    const ref = window._doc(window._db,'users',window.currentUser.uid);
+    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek});
     showToast('☁️ Saved to cloud!');
-  } catch(e) { showToast('⚠️ Save failed'); console.error(e); }
+  } catch(e){showToast('⚠️ Save failed');console.error(e);}
 }
 window.saveToCloud = saveToCloud;
 
 async function quickSave() {
-  if (!window.currentUser) return;
+  if(!window.currentUser) return;
   try {
-    const ref = window._doc(window._db, 'users', window.currentUser.uid);
-    await window._setDoc(ref, { kids: state.kids, checks: state.checks, currentWeek: state.currentWeek });
-  } catch(e) { console.error(e); }
+    const ref = window._doc(window._db,'users',window.currentUser.uid);
+    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek});
+  } catch(e){console.error(e);}
 }
 
 function showToast(msg) {
-  const t = document.getElementById('save-toast');
-  t.textContent = msg || '✅ Saved!';
+  const t=document.getElementById('save-toast');
+  t.textContent=msg||'✅ Saved!';
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  setTimeout(()=>t.classList.remove('show'),2000);
 }
 
-// ── AUTH ──
-let authMode = 'login';
+// AUTH
+let authMode='login';
 function switchAuthTab(mode) {
-  authMode = mode;
-  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', (i===0&&mode==='login')||(i===1&&mode==='signup')));
-  document.getElementById('signup-extra').style.display = mode==='signup'?'block':'none';
-  document.getElementById('auth-submit-btn').textContent = mode==='login'?'🚀 Login':'🎉 Create Account';
-  document.getElementById('auth-error').textContent = '';
+  authMode=mode;
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&mode==='login')||(i===1&&mode==='signup')));
+  document.getElementById('signup-extra').style.display=mode==='signup'?'block':'none';
+  document.getElementById('auth-submit-btn').textContent=mode==='login'?'🚀 Login':'🎉 Create Account';
+  document.getElementById('auth-error').textContent='';
 }
-window.switchAuthTab = switchAuthTab;
+window.switchAuthTab=switchAuthTab;
 
 async function handleAuth() {
-  const email = document.getElementById('auth-email').value.trim();
-  const password = document.getElementById('auth-password').value;
-  const errEl = document.getElementById('auth-error');
-  const btn = document.getElementById('auth-submit-btn');
-  if (!email || !password) { errEl.textContent = 'Please fill in all fields'; return; }
-  btn.disabled = true;
-  btn.textContent = '...';
+  const email=document.getElementById('auth-email').value.trim();
+  const password=document.getElementById('auth-password').value;
+  const errEl=document.getElementById('auth-error');
+  const btn=document.getElementById('auth-submit-btn');
+  if(!email||!password){errEl.textContent='Please fill in all fields';return;}
+  btn.disabled=true;btn.textContent='...';
   try {
-    if (authMode === 'signup') {
-      await window._createUser(window._auth, email, password);
-    } else {
-      await window._signIn(window._auth, email, password);
-    }
-    errEl.textContent = '';
+    if(authMode==='signup') await window._createUser(window._auth,email,password);
+    else await window._signIn(window._auth,email,password);
+    errEl.textContent='';
   } catch(e) {
-    errEl.textContent = e.message.replace('Firebase: ','').replace(/\(.*\)/,'');
-    btn.disabled = false;
-    btn.textContent = authMode==='login'?'🚀 Login':'🎉 Create Account';
+    errEl.textContent=e.message.replace('Firebase: ','').replace(/\(.*\)/,'');
+    btn.disabled=false;
+    btn.textContent=authMode==='login'?'🚀 Login':'🎉 Create Account';
   }
 }
-window.handleAuth = handleAuth;
+window.handleAuth=handleAuth;
 
+// ✅ FIXED: Google login uses redirect (works on Safari/iPad)
 async function handleGoogle() {
   try {
     await window._googleSignIn(window._auth, window._googleProvider);
+    // Page will redirect to Google, then come back automatically
   } catch(e) {
-    document.getElementById('auth-error').textContent = e.message.replace('Firebase: ','').replace(/\(.*\)/,'');
+    document.getElementById('auth-error').textContent='Google login failed. Try email instead.';
   }
 }
-window.handleGoogle = handleGoogle;
+window.handleGoogle=handleGoogle;
 
 async function handleLogout() {
   await window._signOut(window._auth);
 }
-window.handleLogout = handleLogout;
+window.handleLogout=handleLogout;
 
-// ── PAGE NAV ──
+// PAGE NAV
 function showPage(p) {
-  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   document.getElementById('nav-'+p).classList.add('active');
-  if (p==='settings') renderSettings();
-  if (p==='tracker') renderTracker();
+  if(p==='settings') renderSettings();
+  if(p==='tracker') renderTracker();
 }
-window.showPage = showPage;
+window.showPage=showPage;
 
-// ── TRACKER ──
-function renderTracker() {
-  renderKidTabs();
-  renderTrackerCard();
-  renderWeekSummary();
-}
+// TRACKER
+function renderTracker(){renderKidTabs();renderTrackerCard();renderWeekSummary();}
 
 function renderKidTabs() {
-  const wrap = document.getElementById('kids-tabs');
-  wrap.innerHTML = '';
-  state.kids.forEach((kid, i) => {
-    const col = PALETTE[kid.colorIdx||0];
-    const btn = document.createElement('button');
-    btn.className = 'kid-tab'+(i===state.currentKid?' active':'');
-    btn.style.background = i===state.currentKid ? col.main : '#f0f0f0';
-    btn.innerHTML = `<span>${kid.animal}</span><span>${kid.name}</span>`;
-    btn.onclick = () => { state.currentKid=i; renderTracker(); };
+  const wrap=document.getElementById('kids-tabs');
+  wrap.innerHTML='';
+  state.kids.forEach((kid,i)=>{
+    const col=PALETTE[kid.colorIdx||0];
+    const btn=document.createElement('button');
+    btn.className='kid-tab'+(i===state.currentKid?' active':'');
+    btn.style.background=i===state.currentKid?col.main:'#f0f0f0';
+    btn.innerHTML=`<span>${kid.animal}</span><span>${kid.name}</span>`;
+    btn.onclick=()=>{state.currentKid=i;renderTracker();};
     wrap.appendChild(btn);
   });
-  const add = document.createElement('button');
-  add.className = 'add-kid-tab';
-  add.textContent = '➕';
-  add.onclick = () => { addKid(); showPage('settings'); };
+  const add=document.createElement('button');
+  add.className='add-kid-tab';add.textContent='➕';
+  add.onclick=()=>{addKid();showPage('settings');};
   wrap.appendChild(add);
 }
 
 function renderTrackerCard() {
-  const kid = state.kids[state.currentKid];
-  if (!kid) return;
-  const col = PALETTE[kid.colorIdx||0];
-  const w = state.currentWeek[kid.id]||1;
-  const wrap = document.getElementById('tracker-card-wrap');
-  wrap.innerHTML = '';
-  const card = document.createElement('div');
-  card.className = 'tracker-card';
-  card.style.background = `linear-gradient(160deg,${col.light} 0%,#fff 60%)`;
-  card.style.borderTop = `4px solid ${col.main}`;
-
-  const wb = document.createElement('div');
-  wb.className = 'week-bar';
-  for (let wk=1;wk<=WEEKS;wk++) {
-    const b = document.createElement('button');
-    b.className = 'week-btn'+(w===wk?' sel':'');
-    b.style.background = w===wk?col.main:'#f0f0f0';
-    b.style.color = w===wk?'#fff':'#999';
-    b.textContent = 'Week '+wk;
-    b.onclick = () => { state.currentWeek[kid.id]=wk; renderTracker(); quickSave(); };
+  const kid=state.kids[state.currentKid];
+  if(!kid)return;
+  const col=PALETTE[kid.colorIdx||0];
+  const w=state.currentWeek[kid.id]||1;
+  const wrap=document.getElementById('tracker-card-wrap');
+  wrap.innerHTML='';
+  const card=document.createElement('div');
+  card.className='tracker-card';
+  card.style.background=`linear-gradient(160deg,${col.light} 0%,#fff 60%)`;
+  card.style.borderTop=`4px solid ${col.main}`;
+  const wb=document.createElement('div');
+  wb.className='week-bar';
+  for(let wk=1;wk<=WEEKS;wk++){
+    const b=document.createElement('button');
+    b.className='week-btn'+(w===wk?' sel':'');
+    b.style.background=w===wk?col.main:'#f0f0f0';
+    b.style.color=w===wk?'#fff':'#999';
+    b.textContent='Week '+wk;
+    b.onclick=()=>{state.currentWeek[kid.id]=wk;renderTracker();quickSave();};
     wb.appendChild(b);
   }
   card.appendChild(wb);
-
-  DAYS.forEach((day, d) => {
-    const checks = state.checks[kid.id][w][d];
-    const done = checks.filter(Boolean).length;
-    const total = kid.tasks.length;
-    const key = kid.id+'_'+w+'_'+d;
-    const todayIdx = (new Date().getDay()+6)%7;
-    const isOpen = openDays[key] !== undefined ? openDays[key] : d===todayIdx;
-
-    const block = document.createElement('div');
-    block.className = 'day-block'+(isOpen?' open':'');
-
-    const header = document.createElement('div');
-    header.className = 'day-header';
-    header.innerHTML = `
+  DAYS.forEach((day,d)=>{
+    const checks=state.checks[kid.id][w][d];
+    const done=checks.filter(Boolean).length;
+    const total=kid.tasks.length;
+    const key=kid.id+'_'+w+'_'+d;
+    const todayIdx=(new Date().getDay()+6)%7;
+    const isOpen=openDays[key]!==undefined?openDays[key]:d===todayIdx;
+    const block=document.createElement('div');
+    block.className='day-block'+(isOpen?' open':'');
+    const header=document.createElement('div');
+    header.className='day-header';
+    header.innerHTML=`
       <div style="display:flex;align-items:center;gap:8px;">
         <span class="day-badge" style="background:${col.main}">${day}</span>
         <span class="day-score">${done}/${total} ${done===total&&total>0?'⭐':''}</span>
       </div>
       <span class="day-arrow">▼</span>`;
-    header.onclick = () => { openDays[key]=!block.classList.contains('open'); block.classList.toggle('open'); };
+    header.onclick=()=>{openDays[key]=!block.classList.contains('open');block.classList.toggle('open');};
     block.appendChild(header);
-
-    const tasksDiv = document.createElement('div');
-    tasksDiv.className = 'day-tasks';
-    kid.tasks.forEach((task, t) => {
-      const isDone = checks[t];
-      const row = document.createElement('div');
-      row.className = 'task-row'+(isDone?' done':'');
-      row.innerHTML = `
+    const tasksDiv=document.createElement('div');
+    tasksDiv.className='day-tasks';
+    kid.tasks.forEach((task,t)=>{
+      const isDone=checks[t];
+      const row=document.createElement('div');
+      row.className='task-row'+(isDone?' done':'');
+      row.innerHTML=`
         <span class="t-icon">${task.icon}</span>
         <span class="t-name">${task.name}</span>
         <div class="check-box ${isDone?'on':''}" style="${isDone?`background:${col.main};border-color:${col.main}`:''}">
           ${isDone?'✓':''}
         </div>`;
-      row.onclick = () => toggleTask(d,t);
+      row.onclick=()=>toggleTask(d,t);
       tasksDiv.appendChild(row);
     });
     block.appendChild(tasksDiv);
@@ -543,43 +508,42 @@ function renderTrackerCard() {
 }
 
 function renderWeekSummary() {
-  const kid = state.kids[state.currentKid];
-  if (!kid) return;
-  const col = PALETTE[kid.colorIdx||0];
-  const w = state.currentWeek[kid.id]||1;
-  const wrap = document.getElementById('week-summary-wrap');
-  wrap.innerHTML = '';
-  const box = document.createElement('div');
-  box.className = 'week-summary';
+  const kid=state.kids[state.currentKid];
+  if(!kid)return;
+  const col=PALETTE[kid.colorIdx||0];
+  const w=state.currentWeek[kid.id]||1;
+  const wrap=document.getElementById('week-summary-wrap');
+  wrap.innerHTML='';
+  const box=document.createElement('div');
+  box.className='week-summary';
   let totalDone=0,totalMax=0;
   const fullDays=[];
-  const chips = document.createElement('div');
-  chips.className = 'day-chips';
-  DAYS.forEach((day,d) => {
-    const checks = state.checks[kid.id][w][d];
-    const done = checks.filter(Boolean).length;
-    const total = kid.tasks.length;
-    totalDone+=done; totalMax+=total;
-    const full = done===total&&total>0;
+  const chips=document.createElement('div');
+  chips.className='day-chips';
+  DAYS.forEach((day,d)=>{
+    const checks=state.checks[kid.id][w][d];
+    const done=checks.filter(Boolean).length;
+    const total=kid.tasks.length;
+    totalDone+=done;totalMax+=total;
+    const full=done===total&&total>0;
     fullDays.push(full);
-    const chip = document.createElement('div');
-    chip.className = 'd-chip';
-    chip.style.background = full?col.light:'#f5f5f5';
-    chip.innerHTML = `<span class="cs" style="color:${full?col.dark:'#aaa'}">${full?'⭐':done}</span><span class="cl">${day}</span>`;
+    const chip=document.createElement('div');
+    chip.className='d-chip';
+    chip.style.background=full?col.light:'#f5f5f5';
+    chip.innerHTML=`<span class="cs" style="color:${full?col.dark:'#aaa'}">${full?'⭐':done}</span><span class="cl">${day}</span>`;
     chips.appendChild(chip);
   });
-  const pct = totalMax>0?Math.round((totalDone/totalMax)*100):0;
-  const earned = fullDays.filter(Boolean).length;
-  box.innerHTML = `<div class="sum-title">📅 Week ${w} Progress</div>`;
+  const pct=totalMax>0?Math.round((totalDone/totalMax)*100):0;
+  const earned=fullDays.filter(Boolean).length;
+  box.innerHTML=`<div class="sum-title">📅 Week ${w} Progress</div>`;
   box.appendChild(chips);
-  box.innerHTML += `
+  box.innerHTML+=`
     <div class="prog-label"><span>Total Progress</span><span>${totalDone}/${totalMax} (${pct}%)</span></div>
     <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:linear-gradient(90deg,${col.grad})"></div></div>
     <div class="stars-row">${Array.from({length:7},(_,i)=>`<span class="s-icon ${fullDays[i]?'':'s-empty'}">⭐</span>`).join('')}</div>`;
-  if (earned>=3) {
-    const msgs = {7:'🏆 PERFECT WEEK! CHAMPION!', 5:`🥇 Amazing! ${earned}/7 perfect days!`, 3:`🥈 Great job! ${earned}/7 days!`};
-    const msg = earned===7?msgs[7]:earned>=5?msgs[5]:msgs[3];
-    const ach = document.createElement('div');
+  if(earned>=3){
+    const msg=earned===7?'🏆 PERFECT WEEK! CHAMPION!':earned>=5?`🥇 Amazing! ${earned}/7 perfect days!`:`🥈 Great job! ${earned}/7 days!`;
+    const ach=document.createElement('div');
     ach.className='achieve show';
     ach.style.cssText=`background:${col.light};color:${col.dark};border-color:${col.main}`;
     ach.textContent=msg;
@@ -589,25 +553,24 @@ function renderWeekSummary() {
 }
 
 async function toggleTask(d,t) {
-  const kid = state.kids[state.currentKid];
-  const w = state.currentWeek[kid.id]||1;
-  const val = !state.checks[kid.id][w][d][t];
-  state.checks[kid.id][w][d][t] = val;
-  if (val) spawnConfetti(kid.colorIdx||0);
-  renderTrackerCard();
-  renderWeekSummary();
+  const kid=state.kids[state.currentKid];
+  const w=state.currentWeek[kid.id]||1;
+  const val=!state.checks[kid.id][w][d][t];
+  state.checks[kid.id][w][d][t]=val;
+  if(val) spawnConfetti(kid.colorIdx||0);
+  renderTrackerCard();renderWeekSummary();
   await quickSave();
 }
 
-// ── SETTINGS ──
+// SETTINGS
 function renderSettings() {
-  const list = document.getElementById('settings-kids-list');
-  list.innerHTML = '';
-  state.kids.forEach((kid,i) => {
-    const col = PALETTE[kid.colorIdx||0];
-    const card = document.createElement('div');
-    card.className = 'kid-card-settings';
-    card.innerHTML = `
+  const list=document.getElementById('settings-kids-list');
+  list.innerHTML='';
+  state.kids.forEach((kid,i)=>{
+    const col=PALETTE[kid.colorIdx||0];
+    const card=document.createElement('div');
+    card.className='kid-card-settings';
+    card.innerHTML=`
       <div class="kcs-top">
         <div class="kid-avatar-big" style="background:${col.light}">${kid.animal}</div>
         <div style="flex:1">
@@ -625,28 +588,25 @@ function renderSettings() {
       ${state.kids.length>1?`<button class="del-kid-btn" onclick="deleteKid(${i})">🗑 Remove ${kid.name}</button>`:''}
     `;
     list.appendChild(card);
-    // Colors
-    const cp = card.querySelector('#cp-'+i);
-    PALETTE.forEach((p,ci) => {
-      const dot = document.createElement('div');
+    const cp=card.querySelector('#cp-'+i);
+    PALETTE.forEach((p,ci)=>{
+      const dot=document.createElement('div');
       dot.className='color-dot'+(kid.colorIdx===ci?' sel':'');
       dot.style.background=p.main;
       dot.onclick=()=>{state.kids[i].colorIdx=ci;renderSettings();};
       cp.appendChild(dot);
     });
-    // Animals
-    const ap = card.querySelector('#ap-'+i);
-    ANIMALS.forEach(a => {
-      const btn = document.createElement('button');
+    const ap=card.querySelector('#ap-'+i);
+    ANIMALS.forEach(a=>{
+      const btn=document.createElement('button');
       btn.className='animal-btn'+(kid.animal===a?' sel':'');
       btn.textContent=a;
       btn.onclick=()=>{state.kids[i].animal=a;renderSettings();};
       ap.appendChild(btn);
     });
-    // Tasks
-    const te = card.querySelector('#te-'+i);
-    kid.tasks.forEach((task,t) => {
-      const row = document.createElement('div');
+    const te=card.querySelector('#te-'+i);
+    kid.tasks.forEach((task,t)=>{
+      const row=document.createElement('div');
       row.className='task-edit-row';
       row.innerHTML=`
         <div class="task-icon-pick" onclick="openEmojiModal(${i},${t})">${task.icon}</div>
@@ -658,18 +618,17 @@ function renderSettings() {
   });
 }
 
-function addKid() {
+function addKid(){
   const id='k'+Date.now();
   const used=state.kids.map(k=>k.colorIdx||0);
   let colorIdx=0;
   for(let c=0;c<PALETTE.length;c++){if(!used.includes(c)){colorIdx=c;break;}}
   state.kids.push({id,name:'Child '+(state.kids.length+1),animal:ANIMALS[Math.floor(Math.random()*ANIMALS.length)],colorIdx,tasks:JSON.parse(JSON.stringify(DEFAULT_TASKS))});
-  fixState();
-  renderSettings();
+  fixState();renderSettings();
 }
 window.addKid=addKid;
 
-function deleteKid(i) {
+function deleteKid(i){
   if(state.kids.length<=1)return;
   if(!confirm('Remove '+state.kids[i].name+'?'))return;
   state.kids.splice(i,1);
@@ -678,23 +637,20 @@ function deleteKid(i) {
 }
 window.deleteKid=deleteKid;
 
-function addTask(kidIdx) {
+function addTask(kidIdx){
   state.kids[kidIdx].tasks.push({icon:'⭐',name:'New Task'});
-  fixState();
-  renderSettings();
+  fixState();renderSettings();
 }
 window.addTask=addTask;
 
-function deleteTask(kidIdx,taskIdx) {
+function deleteTask(kidIdx,taskIdx){
   if(state.kids[kidIdx].tasks.length<=1)return;
   state.kids[kidIdx].tasks.splice(taskIdx,1);
-  fixState();
-  renderSettings();
+  fixState();renderSettings();
 }
 window.deleteTask=deleteTask;
 
-// ── EMOJI MODAL ──
-function openEmojiModal(kidIdx,taskIdx) {
+function openEmojiModal(kidIdx,taskIdx){
   emojiCallback=(emoji)=>{state.kids[kidIdx].tasks[taskIdx].icon=emoji;renderSettings();};
   const grid=document.getElementById('emoji-grid');
   grid.innerHTML='';
@@ -707,11 +663,11 @@ function openEmojiModal(kidIdx,taskIdx) {
   document.getElementById('emoji-modal-bg').classList.add('open');
 }
 window.openEmojiModal=openEmojiModal;
+
 function closeEmojiModal(){document.getElementById('emoji-modal-bg').classList.remove('open');}
 window.closeEmojiModal=closeEmojiModal;
 
-// ── CONFETTI ──
-function spawnConfetti(colorIdx) {
+function spawnConfetti(colorIdx){
   const col=PALETTE[colorIdx||0];
   const colors=[col.main,col.dark,'#FFD700','#fff'];
   for(let i=0;i<14;i++){
