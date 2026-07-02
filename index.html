@@ -1,174 +1,235 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>⭐ Kids Mission Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-serif;background:#FFF9F0;min-height:100vh;overflow-x:hidden;}
+html,body{width:100%;max-width:430px;margin:0 auto;min-height:100vh;overflow-x:hidden;background:#FFF9F0;}
 
+/* FONTS */
+body{font-family:'Nunito',sans-serif;}
+body.lang-ar{font-family:'Tajawal',sans-serif;direction:rtl;}
+body.lang-ar .app-header,
+body.lang-ar .auth-card,
+body.lang-ar .tracker-card,
+body.lang-ar .week-summary,
+body.lang-ar .kid-card-settings{direction:rtl;text-align:right;}
+
+/* LANGUAGE PICKER */
+.lang-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#FF6B6B22,#4ECDC422);}
+.lang-logo{font-size:4rem;margin-bottom:12px;}
+.lang-title{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#FF6B6B;margin-bottom:8px;text-align:center;}
+.lang-sub{color:#aaa;font-size:1rem;font-weight:700;margin-bottom:36px;text-align:center;}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;}
+.lang-btn{padding:20px 16px;border:3px solid #eee;border-radius:20px;background:#fff;cursor:pointer;text-align:center;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.lang-btn:active{transform:scale(.97);}
+.lang-btn .lang-flag{font-size:2.5rem;display:block;margin-bottom:8px;}
+.lang-btn .lang-name{font-size:1.1rem;font-weight:800;color:#333;display:block;}
+.lang-btn .lang-native{font-size:.9rem;color:#aaa;font-weight:700;display:block;margin-top:2px;}
+.lang-btn.selected{border-color:#FF6B6B;background:#FFF5F5;}
+
+/* AUTH */
 .auth-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#FF6B6B22,#4ECDC422);}
-.auth-logo{font-size:3rem;margin-bottom:8px;}
-.auth-title{font-family:‘Fredoka One’,cursive;font-size:2rem;color:#FF6B6B;margin-bottom:4px;}
-.auth-sub{color:#aaa;font-size:.85rem;font-weight:700;margin-bottom:32px;}
+.auth-logo{font-size:3.5rem;margin-bottom:8px;}
+.auth-title{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#FF6B6B;margin-bottom:6px;text-align:center;}
+.auth-sub{color:#aaa;font-size:1rem;font-weight:700;margin-bottom:28px;text-align:center;}
 .auth-card{background:#fff;border-radius:24px;padding:24px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.1);}
-.auth-tabs{display:flex;margin-bottom:20px;background:#f5f5f5;border-radius:14px;padding:4px;}
-.auth-tab{flex:1;padding:8px;border:none;background:none;font-family:‘Fredoka One’,cursive;font-size:.95rem;color:#aaa;cursor:pointer;border-radius:10px;transition:all .2s;}
+.auth-tabs{display:flex;margin-bottom:20px;background:#f5f5f5;border-radius:16px;padding:4px;gap:4px;}
+.auth-tab{flex:1;padding:12px 8px;border:none;background:none;font-size:1rem;font-weight:800;color:#aaa;cursor:pointer;border-radius:12px;transition:all .2s;}
 .auth-tab.active{background:#fff;color:#FF6B6B;box-shadow:0 2px 8px rgba(0,0,0,.1);}
-.auth-input{width:100%;padding:12px 14px;border:2px solid #eee;border-radius:14px;font-family:‘Nunito’,sans-serif;font-size:.95rem;outline:none;margin-bottom:12px;transition:border-color .2s;}
-.auth-input:focus{border-color:#FF6B6B;}
-.auth-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-family:‘Fredoka One’,cursive;font-size:1.1rem;cursor:pointer;transition:all .2s;margin-top:4px;}
+.auth-input{width:100%;padding:14px 16px;border:2.5px solid #eee;border-radius:14px;font-size:1rem;font-weight:700;outline:none;margin-bottom:14px;transition:border-color .2s;background:#fafafa;}
+.auth-input:focus{border-color:#FF6B6B;background:#fff;}
+.auth-btn{width:100%;padding:16px;border:none;border-radius:16px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-size:1.1rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:4px;letter-spacing:.5px;}
 .auth-btn:disabled{opacity:.6;}
-.auth-error{color:#FF6B6B;font-size:.8rem;font-weight:700;margin-bottom:10px;text-align:center;min-height:18px;}
-.auth-divider{text-align:center;color:#ccc;font-size:.8rem;font-weight:700;margin:12px 0;}
-.google-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#4ECDC4,#45B7D1);color:#fff;font-family:‘Fredoka One’,cursive;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.auth-error{color:#FF6B6B;font-size:.9rem;font-weight:800;margin-bottom:12px;text-align:center;min-height:20px;}
+.back-lang-btn{margin-top:20px;background:none;border:none;color:#aaa;font-size:.9rem;font-weight:800;cursor:pointer;text-decoration:underline;}
 
-.loading-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
-.spinner{width:40px;height:40px;border:4px solid #eee;border-top-color:#FF6B6B;border-radius:50%;animation:spin 1s linear infinite;}
+/* LOADING */
+.loading-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.spinner{width:48px;height:48px;border:5px solid #eee;border-top-color:#FF6B6B;border-radius:50%;animation:spin 1s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.loading-screen p{font-family:‘Fredoka One’,cursive;color:#aaa;font-size:1rem;}
+.loading-screen p{font-size:1.1rem;font-weight:800;color:#aaa;}
 
+/* APP */
 .app-wrap{display:none;}
-.app-header{background:linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#4ECDC4);padding:14px 16px 18px;position:relative;overflow:hidden;}
-.app-header::before{content:’’;position:absolute;inset:0;background:url(“data:image/svg+xml,%3Csvg width=‘40’ height=‘40’ viewBox=‘0 0 40 40’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cg fill=’%23fff’ fill-opacity=‘0.07’%3E%3Cpath d=‘M20 20.5V18H0v5h20v20.5h5V23h20v-5H25V2.5h-5z’/%3E%3C/g%3E%3C/svg%3E”);}
+.app-header{background:linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#4ECDC4);padding:16px;position:relative;overflow:hidden;}
+.app-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.07'%3E%3Cpath d='M20 20.5V18H0v5h20v20.5h5V23h20v-5H25V2.5h-5z'/%3E%3C/g%3E%3C/svg%3E");}
 .header-row{display:flex;align-items:center;justify-content:space-between;position:relative;}
-.header-title{font-family:‘Fredoka One’,cursive;font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.1);}
-.user-email{color:rgba(255,255,255,.85);font-size:.7rem;font-weight:800;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:.7rem;font-weight:800;padding:5px 10px;border-radius:10px;cursor:pointer;}
+.header-title{font-family:'Fredoka One',cursive;font-size:1.6rem;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.1);}
+.header-right{display:flex;align-items:center;gap:8px;}
+.user-email{color:rgba(255,255,255,.85);font-size:.75rem;font-weight:800;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:.75rem;font-weight:800;padding:6px 12px;border-radius:10px;cursor:pointer;}
 
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:1px solid #eee;display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.08);}
-.nav-btn{flex:1;padding:10px 4px 8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:‘Nunito’,sans-serif;font-size:.62rem;font-weight:800;color:#bbb;transition:color .2s;}
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:2px solid #f0f0f0;display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.08);}
+.nav-btn{flex:1;padding:12px 4px 10px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.7rem;font-weight:800;color:#bbb;transition:color .2s;}
 .nav-btn.active{color:#FF6B6B;}
-.nav-icon{font-size:1.3rem;}
+.nav-icon{font-size:1.5rem;}
 
-.page{display:none;padding-bottom:80px;}
+/* PAGES */
+.page{display:none;padding-bottom:90px;}
 .page.active{display:block;}
 
-.kids-tabs{display:flex;gap:0;overflow-x:auto;padding:12px 12px 0;scrollbar-width:none;}
+/* KIDS TABS */
+.kids-tabs{display:flex;gap:0;overflow-x:auto;padding:14px 12px 0;scrollbar-width:none;}
 .kids-tabs::-webkit-scrollbar{display:none;}
-.kid-tab{flex-shrink:0;padding:10px 14px;border:none;border-radius:14px 14px 0 0;font-family:‘Fredoka One’,cursive;font-size:.85rem;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#999;display:flex;align-items:center;gap:6px;}
-.kid-tab.active{color:#fff;transform:translateY(-2px);box-shadow:0 -3px 10px rgba(0,0,0,.12);}
-.add-kid-tab{flex-shrink:0;padding:10px 14px;border:2px dashed #ddd;border-radius:14px 14px 0 0;background:none;cursor:pointer;font-size:1.2rem;color:#ccc;}
+.kid-tab{flex-shrink:0;padding:12px 16px;border:none;border-radius:16px 16px 0 0;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#999;display:flex;align-items:center;gap:8px;}
+.kid-tab.active{color:#fff;transform:translateY(-3px);box-shadow:0 -4px 12px rgba(0,0,0,.12);}
+.add-kid-tab{flex-shrink:0;padding:12px 16px;border:2.5px dashed #ddd;border-radius:16px 16px 0 0;background:none;cursor:pointer;font-size:1.3rem;color:#ccc;}
 
-.tracker-card{margin:0 12px;border-radius:0 0 20px 20px;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.1);}
-.week-bar{display:flex;gap:5px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+/* TRACKER CARD */
+.tracker-card{margin:0 12px;border-radius:0 0 22px 22px;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.1);}
+.week-bar{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
 .week-bar::-webkit-scrollbar{display:none;}
-.week-btn{flex-shrink:0;padding:6px 12px;border-radius:18px;border:2px solid transparent;font-family:‘Fredoka One’,cursive;font-size:.78rem;cursor:pointer;background:#f0f0f0;color:#999;transition:all .2s;}
+.week-btn{flex-shrink:0;padding:8px 14px;border-radius:20px;border:none;font-size:.85rem;font-weight:800;cursor:pointer;background:#f0f0f0;color:#999;transition:all .2s;white-space:nowrap;}
 
-.day-block{margin-bottom:8px;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);}
-.day-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;background:#fff;}
-.day-badge{font-family:‘Fredoka One’,cursive;font-size:.75rem;color:#fff;padding:3px 10px;border-radius:12px;}
-.day-score{font-size:.75rem;font-weight:800;color:#aaa;}
-.day-arrow{font-size:.7rem;color:#ccc;transition:transform .2s;}
+/* DAY ACCORDION */
+.day-block{margin-bottom:10px;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);}
+.day-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:#fff;}
+.day-badge{font-size:.85rem;font-weight:800;color:#fff;padding:4px 14px;border-radius:14px;}
+.day-score{font-size:.85rem;font-weight:800;color:#aaa;}
+.day-arrow{font-size:.8rem;color:#ccc;transition:transform .2s;}
 .day-block.open .day-arrow{transform:rotate(180deg);}
 .day-tasks{display:none;background:#fafafa;}
 .day-block.open .day-tasks{display:block;}
-.task-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;user-select:none;}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;cursor:pointer;user-select:none;transition:background .15s;}
 .task-row:last-child{border-bottom:none;}
 .task-row.done{background:#fefefe;}
-.t-icon{font-size:1.3rem;min-width:28px;text-align:center;}
-.t-name{flex:1;font-weight:700;font-size:.85rem;color:#333;}
+.t-icon{font-size:1.5rem;min-width:32px;text-align:center;}
+.t-name{flex:1;font-size:1rem;font-weight:700;color:#333;}
 .task-row.done .t-name{text-decoration:line-through;color:#ccc;}
-.check-box{width:26px;height:26px;border-radius:50%;border:2.5px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;transition:all .2s;}
+.check-box{width:30px;height:30px;border-radius:50%;border:3px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;transition:all .2s;}
 .check-box.on{color:#fff;}
 
-.week-summary{background:#fff;border-radius:18px;padding:16px;margin:12px 12px 0;box-shadow:0 4px 16px rgba(0,0,0,.07);}
-.sum-title{font-family:‘Fredoka One’,cursive;font-size:1rem;margin-bottom:12px;}
-.day-chips{display:flex;gap:4px;margin-bottom:12px;}
-.d-chip{flex:1;text-align:center;padding:6px 2px;border-radius:10px;background:#f5f5f5;}
-.d-chip .cs{font-family:‘Fredoka One’,cursive;font-size:.95rem;display:block;}
-.d-chip .cl{font-size:.55rem;color:#aaa;font-weight:800;}
-.prog-label{display:flex;justify-content:space-between;font-size:.75rem;font-weight:800;color:#777;margin-bottom:5px;}
-.prog-bar{height:14px;border-radius:20px;background:#f0f0f0;overflow:hidden;}
+/* SUMMARY */
+.week-summary{background:#fff;border-radius:20px;padding:18px;margin:14px 12px 0;box-shadow:0 4px 16px rgba(0,0,0,.07);}
+.sum-title{font-size:1.1rem;font-weight:800;margin-bottom:14px;}
+.day-chips{display:flex;gap:5px;margin-bottom:14px;}
+.d-chip{flex:1;text-align:center;padding:8px 2px;border-radius:12px;background:#f5f5f5;}
+.d-chip .cs{font-size:1rem;font-weight:800;display:block;}
+.d-chip .cl{font-size:.6rem;color:#aaa;font-weight:800;}
+.prog-label{display:flex;justify-content:space-between;font-size:.85rem;font-weight:800;color:#777;margin-bottom:6px;}
+.prog-bar{height:16px;border-radius:20px;background:#f0f0f0;overflow:hidden;}
 .prog-fill{height:100%;border-radius:20px;transition:width .6s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
-.prog-fill::after{content:’’;position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:sh 2s infinite;}
+.prog-fill::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:sh 2s infinite;}
 @keyframes sh{to{left:200%;}}
-.stars-row{display:flex;gap:3px;justify-content:center;margin-top:10px;}
-.s-icon{font-size:1.2rem;}
+.stars-row{display:flex;gap:4px;justify-content:center;margin-top:12px;}
+.s-icon{font-size:1.4rem;}
 .s-empty{filter:grayscale(1) opacity(.25);}
-.achieve{text-align:center;padding:10px;border-radius:14px;margin-top:10px;font-weight:800;font-size:.8rem;display:none;border:2px dashed;}
+.achieve{text-align:center;padding:12px;border-radius:16px;margin-top:12px;font-size:.95rem;font-weight:800;display:none;border:2.5px dashed;}
 .achieve.show{display:block;animation:pop .4s ease;}
 @keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 
-.settings-header{padding:16px;font-family:‘Fredoka One’,cursive;font-size:1.2rem;color:#444;}
+/* SETTINGS */
+.settings-header{padding:18px 16px;font-size:1.3rem;font-weight:800;color:#444;}
 .kids-list{padding:0 12px;}
-.kid-card-settings{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,.07);}
-.kcs-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.kid-avatar-big{font-size:2.4rem;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.kid-name-input{font-family:‘Fredoka One’,cursive;font-size:1rem;border:2px solid #eee;border-radius:10px;padding:6px 10px;width:100%;outline:none;color:#333;}
-.section-label{font-size:.7rem;font-weight:800;color:#aaa;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
-.color-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
-.color-dot{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .2s;}
+.kid-card-settings{background:#fff;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 3px 14px rgba(0,0,0,.08);}
+.kcs-top{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.kid-avatar-big{font-size:2.6rem;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kid-name-input{font-size:1.05rem;font-weight:800;border:2.5px solid #eee;border-radius:12px;padding:8px 12px;width:100%;outline:none;color:#333;background:#fafafa;}
+.kid-name-input:focus{border-color:#FF6B6B;background:#fff;}
+.section-label{font-size:.75rem;font-weight:800;color:#aaa;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;}
+.color-picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.color-dot{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .2s;}
 .color-dot.sel{border-color:#333;transform:scale(1.2);}
-.animal-picker{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
-.animal-btn{font-size:1.5rem;width:42px;height:42px;border-radius:12px;border:2.5px solid transparent;background:#f5f5f5;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.animal-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.animal-btn{font-size:1.6rem;width:46px;height:46px;border-radius:14px;border:2.5px solid transparent;background:#f5f5f5;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .animal-btn.sel{border-color:#FF6B6B;background:#FFE5E5;transform:scale(1.15);}
-.task-edit-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.task-icon-pick{font-size:1.2rem;width:38px;height:38px;border-radius:10px;border:2px solid #eee;background:#fafafa;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.task-name-inp{flex:1;padding:8px 10px;border:2px solid #eee;border-radius:10px;font-family:‘Nunito’,sans-serif;font-size:.85rem;outline:none;}
-.task-name-inp:focus{border-color:#FF6B6B;}
-.del-task-btn{width:30px;height:30px;border-radius:50%;border:none;background:#FFE5E5;color:#FF6B6B;font-size:1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.add-task-btn{width:100%;padding:10px;border:2px dashed #ddd;border-radius:12px;background:none;font-family:‘Fredoka One’,cursive;font-size:.9rem;color:#aaa;cursor:pointer;margin-top:4px;}
-.del-kid-btn{width:100%;padding:10px;border:2px solid #FFE5E5;border-radius:12px;background:none;font-family:‘Fredoka One’,cursive;font-size:.85rem;color:#FF6B6B;cursor:pointer;margin-top:8px;}
-.add-kid-big-btn{display:block;width:calc(100% - 24px);margin:0 12px 16px;padding:14px;border:2.5px dashed #ddd;border-radius:18px;background:none;font-family:‘Fredoka One’,cursive;font-size:1rem;color:#aaa;cursor:pointer;text-align:center;}
-.save-settings-btn{display:block;width:calc(100% - 24px);margin:0 12px 16px;padding:14px;border:none;border-radius:18px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-family:‘Fredoka One’,cursive;font-size:1rem;cursor:pointer;text-align:center;}
+.task-edit-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.task-icon-pick{font-size:1.3rem;width:44px;height:44px;border-radius:12px;border:2.5px solid #eee;background:#fafafa;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.task-name-inp{flex:1;padding:10px 12px;border:2.5px solid #eee;border-radius:12px;font-size:.95rem;font-weight:700;outline:none;background:#fafafa;}
+.task-name-inp:focus{border-color:#FF6B6B;background:#fff;}
+.del-task-btn{width:34px;height:34px;border-radius:50%;border:none;background:#FFE5E5;color:#FF6B6B;font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.add-task-btn{width:100%;padding:12px;border:2.5px dashed #ddd;border-radius:14px;background:none;font-size:1rem;font-weight:800;color:#aaa;cursor:pointer;margin-top:6px;}
+.del-kid-btn{width:100%;padding:12px;border:2.5px solid #FFE5E5;border-radius:14px;background:none;font-size:.95rem;font-weight:800;color:#FF6B6B;cursor:pointer;margin-top:10px;}
+.add-kid-big-btn{display:block;width:calc(100% - 24px);margin:0 12px 14px;padding:16px;border:2.5px dashed #ddd;border-radius:20px;background:none;font-size:1.05rem;font-weight:800;color:#aaa;cursor:pointer;text-align:center;}
+.save-settings-btn{display:block;width:calc(100% - 24px);margin:0 12px 16px;padding:16px;border:none;border-radius:20px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-size:1.05rem;font-weight:800;cursor:pointer;text-align:center;}
 
+/* EMOJI MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:200;}
 .modal-bg.open{display:flex;}
-.emoji-modal{background:#fff;border-radius:24px 24px 0 0;padding:20px;width:100%;max-width:430px;max-height:70vh;overflow-y:auto;animation:slideUp .3s ease;}
+.emoji-modal{background:#fff;border-radius:26px 26px 0 0;padding:22px;width:100%;max-width:430px;max-height:70vh;overflow-y:auto;animation:slideUp .3s ease;}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.emoji-modal h3{font-family:‘Fredoka One’,cursive;font-size:1.1rem;margin-bottom:14px;}
-.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;}
-.e-btn{font-size:1.4rem;width:38px;height:38px;border-radius:10px;border:none;background:#f5f5f5;cursor:pointer;}
-.modal-close{width:100%;padding:12px;border:none;border-radius:14px;background:#f0f0f0;font-family:‘Fredoka One’,cursive;font-size:1rem;color:#666;cursor:pointer;margin-top:12px;}
+.emoji-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:16px;}
+.emoji-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+.e-btn{font-size:1.6rem;width:44px;height:44px;border-radius:12px;border:none;background:#f5f5f5;cursor:pointer;}
+.modal-close{width:100%;padding:14px;border:none;border-radius:16px;background:#f0f0f0;font-size:1rem;font-weight:800;color:#666;cursor:pointer;margin-top:14px;}
 
-.save-toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 18px;border-radius:20px;font-size:.8rem;font-weight:800;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
+/* TOAST */
+.save-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:24px;font-size:.9rem;font-weight:800;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
 .save-toast.show{opacity:1;}
-.confetti-p{position:fixed;width:9px;height:9px;top:-20px;animation:cf 1.4s ease-in forwards;border-radius:2px;z-index:999;pointer-events:none;}
+
+/* CONFETTI */
+.confetti-p{position:fixed;width:10px;height:10px;top:-20px;animation:cf 1.4s ease-in forwards;border-radius:2px;z-index:999;pointer-events:none;}
 @keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 </style>
-
 </head>
 <body>
 
+<!-- LOADING -->
 <div class="loading-screen" id="loading-screen">
   <div class="spinner"></div>
-  <p>Loading your tracker...</p>
+  <p id="loading-text">Loading...</p>
 </div>
 
-<div class="auth-screen" id="auth-screen" style="display:none;">
-  <div class="auth-logo">⭐</div>
-  <div class="auth-title">Mission Tracker</div>
-  <div class="auth-sub">Your kids' habit tracker — saved forever!</div>
-  <div class="auth-card">
-    <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
-      <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
-    </div>
-    <div class="auth-error" id="auth-error"></div>
-    <input class="auth-input" id="auth-email" type="email" placeholder="Your email address">
-    <input class="auth-input" id="auth-password" type="password" placeholder="Password (min 6 characters)">
-    <div id="signup-extra" style="display:none;">
-      <input class="auth-input" id="auth-name" type="text" placeholder="Your name (e.g. Sarah's Family)">
-    </div>
-    <button class="auth-btn" id="auth-submit-btn" onclick="handleAuth()">🚀 Login</button>
-    <div class="auth-divider">— or —</div>
-    <button class="google-btn" onclick="handleGoogle()">
-      <span>🔑</span><span>Continue with Google</span>
+<!-- LANGUAGE PICKER -->
+<div class="lang-screen" id="lang-screen" style="display:none;">
+  <div class="lang-logo">⭐</div>
+  <div class="lang-title">Mission Tracker</div>
+  <div class="lang-sub">Choose your language / Choisissez votre langue</div>
+  <div class="lang-grid">
+    <button class="lang-btn" onclick="setLang('en')">
+      <span class="lang-flag">🇬🇧</span>
+      <span class="lang-name">English</span>
+      <span class="lang-native">English</span>
+    </button>
+    <button class="lang-btn" onclick="setLang('fr')">
+      <span class="lang-flag">🇫🇷</span>
+      <span class="lang-name">Français</span>
+      <span class="lang-native">French</span>
+    </button>
+    <button class="lang-btn" onclick="setLang('ar')">
+      <span class="lang-flag">🇩🇿</span>
+      <span class="lang-name">العربية</span>
+      <span class="lang-native">Arabic</span>
+    </button>
+    <button class="lang-btn" onclick="setLang('de')">
+      <span class="lang-flag">🇩🇪</span>
+      <span class="lang-name">Deutsch</span>
+      <span class="lang-native">German</span>
     </button>
   </div>
 </div>
 
+<!-- AUTH -->
+<div class="auth-screen" id="auth-screen" style="display:none;">
+  <div class="auth-logo">⭐</div>
+  <div class="auth-title" id="auth-title">Mission Tracker</div>
+  <div class="auth-sub" id="auth-sub">Your kids' habit tracker</div>
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Login</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</button>
+    </div>
+    <div class="auth-error" id="auth-error"></div>
+    <input class="auth-input" id="auth-email" type="email" placeholder="Email">
+    <input class="auth-input" id="auth-password" type="password" placeholder="Password">
+    <button class="auth-btn" id="auth-submit-btn" onclick="handleAuth()">Login</button>
+  </div>
+  <button class="back-lang-btn" onclick="goBackToLang()">🌍 Change language</button>
+</div>
+
+<!-- MAIN APP -->
 <div class="app-wrap" id="app-wrap">
   <div class="app-header">
     <div class="header-row">
-      <div class="header-title">⭐ Mission Tracker</div>
-      <div style="display:flex;align-items:center;gap:8px;">
+      <div class="header-title">⭐ <span id="app-title-text">Mission Tracker</span></div>
+      <div class="header-right">
         <span class="user-email" id="user-email-display"></span>
-        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        <button class="logout-btn" id="logout-btn" onclick="handleLogout()">Logout</button>
       </div>
     </div>
   </div>
@@ -178,34 +239,38 @@ html,body{width:100%;max-width:430px;margin:0 auto;font-family:'Nunito',sans-ser
     <div id="week-summary-wrap"></div>
   </div>
   <div class="page" id="page-settings">
-    <div class="settings-header">⚙️ Customize Kids</div>
+    <div class="settings-header" id="settings-header-text">⚙️ Customize</div>
     <div class="kids-list" id="settings-kids-list"></div>
-    <button class="add-kid-big-btn" onclick="addKid()">➕ Add Another Child</button>
-    <button class="save-settings-btn" onclick="saveToCloud()">☁️ Save Everything to Cloud</button>
+    <button class="add-kid-big-btn" id="add-kid-btn" onclick="addKid()">➕ Add Child</button>
+    <button class="save-settings-btn" id="save-cloud-btn" onclick="saveToCloud()">☁️ Save to Cloud</button>
   </div>
   <div class="bottom-nav">
     <button class="nav-btn active" id="nav-tracker" onclick="showPage('tracker')">
-      <span class="nav-icon">📋</span>Tracker
+      <span class="nav-icon">📋</span>
+      <span id="nav-tracker-label">Tracker</span>
     </button>
     <button class="nav-btn" id="nav-settings" onclick="showPage('settings')">
-      <span class="nav-icon">⚙️</span>Customize
+      <span class="nav-icon">⚙️</span>
+      <span id="nav-settings-label">Customize</span>
     </button>
   </div>
 </div>
 
+<!-- EMOJI MODAL -->
 <div class="modal-bg" id="emoji-modal-bg">
   <div class="emoji-modal">
-    <h3>Pick an Emoji</h3>
+    <h3 id="emoji-modal-title">Pick an Emoji</h3>
     <div class="emoji-grid" id="emoji-grid"></div>
-    <button class="modal-close" onclick="closeEmojiModal()">Close</button>
+    <button class="modal-close" id="emoji-close-btn" onclick="closeEmojiModal()">Close</button>
   </div>
 </div>
 
 <div class="save-toast" id="save-toast">✅ Saved!</div>
 
+<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -220,44 +285,39 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
 
 window._auth = auth;
 window._db = db;
-window._googleProvider = googleProvider;
 window._createUser = createUserWithEmailAndPassword;
 window._signIn = signInWithEmailAndPassword;
 window._signOut = signOut;
-window._googleSignIn = signInWithRedirect; // ✅ FIXED: redirect instead of popup
 window._getDoc = getDoc;
 window._setDoc = setDoc;
 window._doc = doc;
 
-// ✅ Handle Google redirect result when page loads
-try {
-  const result = await getRedirectResult(auth);
-  if (result && result.user) {
-    console.log('Google sign in successful');
-  }
-} catch(e) {
-  console.error('Redirect error:', e);
-  document.getElementById('auth-error').textContent = 'Google login failed. Try email instead.';
-}
-
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     window.currentUser = user;
-    document.getElementById('user-email-display').textContent = user.email || user.displayName;
+    document.getElementById('user-email-display').textContent = user.email;
     await loadFromCloud(user.uid);
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('lang-screen').style.display = 'none';
     document.getElementById('app-wrap').style.display = 'block';
+    applyLangToApp();
     renderTracker();
   } else {
     window.currentUser = null;
     document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('app-wrap').style.display = 'none';
+    const savedLang = localStorage.getItem('mtracker-lang');
+    if (savedLang) {
+      currentLang = savedLang;
+      applyBodyLang();
+      showAuth();
+    } else {
+      document.getElementById('lang-screen').style.display = 'flex';
+    }
   }
 });
 
@@ -270,6 +330,7 @@ async function loadFromCloud(uid) {
       state.kids = data.kids || defaultKids();
       state.checks = data.checks || {};
       state.currentWeek = data.currentWeek || {};
+      if (data.lang) currentLang = data.lang;
       fixState();
     } else {
       state.kids = defaultKids();
@@ -279,7 +340,6 @@ async function loadFromCloud(uid) {
       await saveToCloud();
     }
   } catch(e) {
-    console.error(e);
     state.kids = defaultKids();
     fixState();
   }
@@ -288,47 +348,232 @@ window.loadFromCloud = loadFromCloud;
 </script>
 
 <script>
-const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const WEEKS = 5;
-const ALL_EMOJIS = ['⭐','📚','🏃','🧹','🍎','🎨','🎵','💪','🧼','🛏','🥗','🎮','📖','🌿','🧘','✏️','🐶','🎯','💧','🦷','⏰','🎒','😴','🚿','🧺','🏊','🚴','🍳','🧩','🎪','🌟','🏆','🎁','🌈','🦋','🐝','🌸','🍕','🥤','🧁','🎭','🎬','🎤','🎻','🥁','🏋️','🤸','⚽','🏀','🎾','🧲','🔬','🌍','🚀','✈️','🏖','🏔','🎡','🎢','🎠','🦄','🐯','🦊','🐼','🐨','🐸','🦅','🐬','🦁','🐧','🐙'];
+// ── TRANSLATIONS ──
+const T = {
+  en: {
+    appTitle: 'Mission Tracker',
+    appSub: "Your kids' habit tracker — saved forever!",
+    login: 'Login', signup: 'Sign Up',
+    emailPlaceholder: 'Your email address',
+    passwordPlaceholder: 'Password (min 6 characters)',
+    loginBtn: '🚀 Login',
+    signupBtn: '🎉 Create Account',
+    fillFields: 'Please fill in all fields',
+    logout: 'Logout',
+    tracker: 'Tracker',
+    customize: 'Customize',
+    settingsHeader: '⚙️ Customize Kids',
+    addKid: '➕ Add Another Child',
+    saveCloud: '☁️ Save to Cloud',
+    savedCloud: '☁️ Saved to cloud!',
+    saveFailed: '⚠️ Save failed',
+    colorTheme: '🎨 Color Theme',
+    animalAvatar: '🐾 Animal Avatar',
+    dailyTasks: '✅ Daily Tasks',
+    addTask: '➕ Add Task',
+    removeKid: '🗑 Remove',
+    weekProgress: '📅 Week Progress',
+    totalProgress: 'Total Progress',
+    perfectWeek: '🏆 PERFECT WEEK! You are a CHAMPION!',
+    amazing: '🥇 Amazing!',
+    great: '🥈 Great job!',
+    perfectDays: 'perfect days!',
+    pickEmoji: 'Pick an Emoji',
+    close: 'Close',
+    changeLang: '🌍 Change language',
+    loading: 'Loading...',
+    week: 'Week',
+    days: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    tasks: [
+      {icon:'⏰',name:'Wake up on time'},
+      {icon:'🦷',name:'Brush teeth'},
+      {icon:'🛏',name:'Make the bed'},
+      {icon:'📚',name:'Do homework'},
+      {icon:'🧹',name:'Tidy my room'},
+      {icon:'🍎',name:'Eat fruits'},
+      {icon:'📖',name:'Read 15 mins'},
+      {icon:'💧',name:'Drink water'},
+      {icon:'😴',name:'Sleep on time'},
+    ],
+    kid1Name: 'Alex (10)', kid2Name: 'Sam (8)',
+  },
+  fr: {
+    appTitle: 'Suivi des Missions',
+    appSub: 'Le suivi des habitudes de vos enfants — sauvegardé pour toujours!',
+    login: 'Connexion', signup: "S'inscrire",
+    emailPlaceholder: 'Votre adresse email',
+    passwordPlaceholder: 'Mot de passe (min 6 caractères)',
+    loginBtn: '🚀 Se connecter',
+    signupBtn: '🎉 Créer un compte',
+    fillFields: 'Veuillez remplir tous les champs',
+    logout: 'Déconnexion',
+    tracker: 'Suivi',
+    customize: 'Personnaliser',
+    settingsHeader: '⚙️ Personnaliser',
+    addKid: '➕ Ajouter un enfant',
+    saveCloud: '☁️ Sauvegarder',
+    savedCloud: '☁️ Sauvegardé!',
+    saveFailed: '⚠️ Échec de sauvegarde',
+    colorTheme: '🎨 Couleur',
+    animalAvatar: '🐾 Animal',
+    dailyTasks: '✅ Tâches quotidiennes',
+    addTask: '➕ Ajouter une tâche',
+    removeKid: '🗑 Supprimer',
+    weekProgress: '📅 Progrès de la semaine',
+    totalProgress: 'Progrès total',
+    perfectWeek: '🏆 SEMAINE PARFAITE! Tu es un CHAMPION!',
+    amazing: '🥇 Incroyable!',
+    great: '🥈 Bravo!',
+    perfectDays: 'jours parfaits!',
+    pickEmoji: 'Choisir un emoji',
+    close: 'Fermer',
+    changeLang: '🌍 Changer de langue',
+    loading: 'Chargement...',
+    week: 'Semaine',
+    days: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
+    tasks: [
+      {icon:'⏰',name:'Se lever à l\'heure'},
+      {icon:'🦷',name:'Se brosser les dents'},
+      {icon:'🛏',name:'Faire son lit'},
+      {icon:'📚',name:'Faire ses devoirs'},
+      {icon:'🧹',name:'Ranger sa chambre'},
+      {icon:'🍎',name:'Manger des fruits'},
+      {icon:'📖',name:'Lire 15 min'},
+      {icon:'💧',name:'Boire de l\'eau'},
+      {icon:'😴',name:'Dormir à l\'heure'},
+    ],
+    kid1Name: 'Alex (10)', kid2Name: 'Sam (8)',
+  },
+  ar: {
+    appTitle: 'متتبع المهام',
+    appSub: 'تتبع عادات أطفالك — محفوظ للأبد!',
+    login: 'دخول', signup: 'إنشاء حساب',
+    emailPlaceholder: 'بريدك الإلكتروني',
+    passwordPlaceholder: 'كلمة المرور (6 أحرف على الأقل)',
+    loginBtn: '🚀 تسجيل الدخول',
+    signupBtn: '🎉 إنشاء حساب جديد',
+    fillFields: 'يرجى ملء جميع الحقول',
+    logout: 'خروج',
+    tracker: 'المهام',
+    customize: 'تخصيص',
+    settingsHeader: '⚙️ تخصيص الأطفال',
+    addKid: '➕ إضافة طفل آخر',
+    saveCloud: '☁️ حفظ في السحابة',
+    savedCloud: '☁️ تم الحفظ!',
+    saveFailed: '⚠️ فشل الحفظ',
+    colorTheme: '🎨 اللون',
+    animalAvatar: '🐾 الحيوان',
+    dailyTasks: '✅ المهام اليومية',
+    addTask: '➕ إضافة مهمة',
+    removeKid: '🗑 حذف',
+    weekProgress: '📅 تقدم الأسبوع',
+    totalProgress: 'التقدم الكلي',
+    perfectWeek: '🏆 أسبوع مثالي! أنت بطل!',
+    amazing: '🥇 رائع جداً!',
+    great: '🥈 أحسنت!',
+    perfectDays: 'أيام مثالية!',
+    pickEmoji: 'اختر رمزاً',
+    close: 'إغلاق',
+    changeLang: '🌍 تغيير اللغة',
+    loading: 'جار التحميل...',
+    week: 'أسبوع',
+    days: ['إثن','ثلا','أرب','خمي','جمع','سبت','أحد'],
+    tasks: [
+      {icon:'⏰',name:'الاستيقاظ في الوقت'},
+      {icon:'🦷',name:'تنظيف الأسنان'},
+      {icon:'🛏',name:'ترتيب السرير'},
+      {icon:'📚',name:'أداء الواجبات'},
+      {icon:'🧹',name:'ترتيب الغرفة'},
+      {icon:'🍎',name:'أكل الفواكه'},
+      {icon:'📖',name:'القراءة 15 دقيقة'},
+      {icon:'💧',name:'شرب الماء'},
+      {icon:'😴',name:'النوم في الوقت'},
+    ],
+    kid1Name: 'أحمد (10)', kid2Name: 'سارة (8)',
+  },
+  de: {
+    appTitle: 'Missions-Tracker',
+    appSub: 'Der Gewohnheitstracker für Ihre Kinder — für immer gespeichert!',
+    login: 'Anmelden', signup: 'Registrieren',
+    emailPlaceholder: 'Ihre E-Mail-Adresse',
+    passwordPlaceholder: 'Passwort (min. 6 Zeichen)',
+    loginBtn: '🚀 Anmelden',
+    signupBtn: '🎉 Konto erstellen',
+    fillFields: 'Bitte alle Felder ausfüllen',
+    logout: 'Abmelden',
+    tracker: 'Tracker',
+    customize: 'Anpassen',
+    settingsHeader: '⚙️ Kinder anpassen',
+    addKid: '➕ Kind hinzufügen',
+    saveCloud: '☁️ In der Cloud speichern',
+    savedCloud: '☁️ In der Cloud gespeichert!',
+    saveFailed: '⚠️ Speichern fehlgeschlagen',
+    colorTheme: '🎨 Farbe',
+    animalAvatar: '🐾 Tier',
+    dailyTasks: '✅ Tägliche Aufgaben',
+    addTask: '➕ Aufgabe hinzufügen',
+    removeKid: '🗑 Entfernen',
+    weekProgress: '📅 Wochenfortschritt',
+    totalProgress: 'Gesamtfortschritt',
+    perfectWeek: '🏆 PERFEKTE WOCHE! Du bist ein CHAMPION!',
+    amazing: '🥇 Fantastisch!',
+    great: '🥈 Toll gemacht!',
+    perfectDays: 'perfekte Tage!',
+    pickEmoji: 'Emoji wählen',
+    close: 'Schließen',
+    changeLang: '🌍 Sprache ändern',
+    loading: 'Laden...',
+    week: 'Woche',
+    days: ['Mo','Di','Mi','Do','Fr','Sa','So'],
+    tasks: [
+      {icon:'⏰',name:'Pünktlich aufstehen'},
+      {icon:'🦷',name:'Zähne putzen'},
+      {icon:'🛏',name:'Bett machen'},
+      {icon:'📚',name:'Hausaufgaben'},
+      {icon:'🧹',name:'Zimmer aufräumen'},
+      {icon:'🍎',name:'Obst essen'},
+      {icon:'📖',name:'15 Min lesen'},
+      {icon:'💧',name:'Wasser trinken'},
+      {icon:'😴',name:'Pünktlich schlafen'},
+    ],
+    kid1Name: 'Alex (10)', kid2Name: 'Sam (8)',
+  },
+};
+
 const ANIMALS = ['🦁','🐯','🦊','🐼','🐨','🐸','🦅','🐬','🐧','🐙','🦄','🐶','🐱','🐻','🐺','🦋','🐝','🦖','🦕','🐲'];
 const PALETTE = [
-  {name:'Red',    main:'#FF6B6B',light:'#FFE5E5',dark:'#C0392B',grad:'#FF6B6B,#FF8E53'},
-  {name:'Teal',   main:'#4ECDC4',light:'#E0F7F6',dark:'#1A9B93',grad:'#4ECDC4,#45B7D1'},
-  {name:'Purple', main:'#9B59B6',light:'#F3E5F5',dark:'#6C3483',grad:'#9B59B6,#C39BD3'},
-  {name:'Green',  main:'#2ECC71',light:'#E8F8F0',dark:'#1A8A4A',grad:'#2ECC71,#A8E6CF'},
-  {name:'Orange', main:'#FF9F43',light:'#FFF3E0',dark:'#D68910',grad:'#FF9F43,#FFEAA7'},
-  {name:'Blue',   main:'#3498DB',light:'#EBF5FB',dark:'#1A5276',grad:'#3498DB,#74B9FF'},
-  {name:'Pink',   main:'#FF6B9D',light:'#FFE5F0',dark:'#B03060',grad:'#FF6B9D,#FFC0CB'},
-  {name:'Yellow', main:'#F1C40F',light:'#FEF9E7',dark:'#9A7D0A',grad:'#F1C40F,#FFEAA7'},
+  {main:'#FF6B6B',light:'#FFE5E5',dark:'#C0392B',grad:'#FF6B6B,#FF8E53'},
+  {main:'#4ECDC4',light:'#E0F7F6',dark:'#1A9B93',grad:'#4ECDC4,#45B7D1'},
+  {main:'#9B59B6',light:'#F3E5F5',dark:'#6C3483',grad:'#9B59B6,#C39BD3'},
+  {main:'#2ECC71',light:'#E8F8F0',dark:'#1A8A4A',grad:'#2ECC71,#A8E6CF'},
+  {main:'#FF9F43',light:'#FFF3E0',dark:'#D68910',grad:'#FF9F43,#FFEAA7'},
+  {main:'#3498DB',light:'#EBF5FB',dark:'#1A5276',grad:'#3498DB,#74B9FF'},
+  {main:'#FF6B9D',light:'#FFE5F0',dark:'#B03060',grad:'#FF6B9D,#FFC0CB'},
+  {main:'#F1C40F',light:'#FEF9E7',dark:'#9A7D0A',grad:'#F1C40F,#FFEAA7'},
 ];
-const DEFAULT_TASKS = [
-  {icon:'⏰',name:'Wake up on time'},
-  {icon:'🦷',name:'Brush teeth'},
-  {icon:'🛏',name:'Make the bed'},
-  {icon:'📚',name:'Do homework'},
-  {icon:'🧹',name:'Tidy my room'},
-  {icon:'🍎',name:'Eat fruits'},
-  {icon:'📖',name:'Read 15 mins'},
-  {icon:'💧',name:'Drink water'},
-  {icon:'😴',name:'Sleep on time'},
-];
+const ALL_EMOJIS = ['⭐','📚','🏃','🧹','🍎','🎨','🎵','💪','🧼','🛏','🥗','🎮','📖','🌿','🧘','✏️','🐶','🎯','💧','🦷','⏰','🎒','😴','🚿','🧺','🏊','🚴','🍳','🧩','🌟','🏆','🎁','🌈','🦋','🐝','🌸','🍕','🥤','🧁','🎭','🎬','🎤','🏋️','🤸','⚽','🏀','🎾','🧲','🔬','🌍','🚀','✈️','🦄','🐯','🦊','🐼','🐨','🐸','🐬','🦁','🐧','🐙'];
+const WEEKS = 5;
 
-function defaultKids() {
-  return [
-    {id:'k0',name:'Alex (10)',animal:'🦁',colorIdx:0,tasks:JSON.parse(JSON.stringify(DEFAULT_TASKS))},
-    {id:'k1',name:'Sam (8)', animal:'🐬',colorIdx:1,tasks:JSON.parse(JSON.stringify(DEFAULT_TASKS))},
-  ];
-}
-
+let currentLang = 'en';
 let state = {kids:[],checks:{},currentKid:0,currentWeek:{}};
 let openDays = {};
 let emojiCallback = null;
+let authMode = 'login';
+
+function t(key) { return T[currentLang][key] || T['en'][key]; }
+
+function defaultKids() {
+  const lang = T[currentLang];
+  return [
+    {id:'k0',name:lang.kid1Name,animal:'🦁',colorIdx:0,tasks:JSON.parse(JSON.stringify(lang.tasks))},
+    {id:'k1',name:lang.kid2Name,animal:'🐬',colorIdx:1,tasks:JSON.parse(JSON.stringify(lang.tasks))},
+  ];
+}
 
 function fixState() {
   state.kids.forEach(kid => {
-    if (!state.checks[kid.id]) state.checks[kid.id]={};
-    if (!state.currentWeek[kid.id]) state.currentWeek[kid.id]=1;
+    if(!state.checks[kid.id]) state.checks[kid.id]={};
+    if(!state.currentWeek[kid.id]) state.currentWeek[kid.id]=1;
     for(let w=1;w<=WEEKS;w++){
       if(!state.checks[kid.id][w]) state.checks[kid.id][w]={};
       for(let d=0;d<7;d++){
@@ -341,48 +586,71 @@ function fixState() {
   if(!state.kids[state.currentKid]) state.currentKid=0;
 }
 
-async function saveToCloud() {
-  if(!window.currentUser) return;
-  try {
-    const ref = window._doc(window._db,'users',window.currentUser.uid);
-    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek});
-    showToast('☁️ Saved to cloud!');
-  } catch(e){showToast('⚠️ Save failed');console.error(e);}
+// ── LANG ──
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('mtracker-lang', lang);
+  applyBodyLang();
+  showAuth();
 }
-window.saveToCloud = saveToCloud;
+window.setLang = setLang;
 
-async function quickSave() {
-  if(!window.currentUser) return;
-  try {
-    const ref = window._doc(window._db,'users',window.currentUser.uid);
-    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek});
-  } catch(e){console.error(e);}
+function applyBodyLang() {
+  document.body.className = 'lang-'+currentLang;
+  if(currentLang==='ar') document.documentElement.setAttribute('dir','rtl');
+  else document.documentElement.setAttribute('dir','ltr');
 }
 
-function showToast(msg) {
-  const t=document.getElementById('save-toast');
-  t.textContent=msg||'✅ Saved!';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
+function applyLangToApp() {
+  applyBodyLang();
+  document.getElementById('loading-text').textContent = t('loading');
+  document.getElementById('logout-btn').textContent = t('logout');
+  document.getElementById('nav-tracker-label').textContent = t('tracker');
+  document.getElementById('nav-settings-label').textContent = t('customize');
+  document.getElementById('settings-header-text').textContent = t('settingsHeader');
+  document.getElementById('add-kid-btn').textContent = t('addKid');
+  document.getElementById('save-cloud-btn').textContent = t('saveCloud');
+  document.getElementById('emoji-modal-title').textContent = t('pickEmoji');
+  document.getElementById('emoji-close-btn').textContent = t('close');
 }
 
-// AUTH
-let authMode='login';
+function showAuth() {
+  document.getElementById('lang-screen').style.display='none';
+  document.getElementById('auth-screen').style.display='flex';
+  applyBodyLang();
+  // Update auth text
+  document.getElementById('auth-title').textContent = t('appTitle');
+  document.getElementById('auth-sub').textContent = t('appSub');
+  document.getElementById('tab-login').textContent = t('login');
+  document.getElementById('tab-signup').textContent = t('signup');
+  document.getElementById('auth-email').placeholder = t('emailPlaceholder');
+  document.getElementById('auth-password').placeholder = t('passwordPlaceholder');
+  document.getElementById('auth-submit-btn').textContent = t('loginBtn');
+  document.querySelector('.back-lang-btn').textContent = t('changeLang');
+}
+
+function goBackToLang() {
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('lang-screen').style.display='flex';
+}
+window.goBackToLang = goBackToLang;
+
+// ── AUTH ──
 function switchAuthTab(mode) {
-  authMode=mode;
-  document.querySelectorAll('.auth-tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&mode==='login')||(i===1&&mode==='signup')));
-  document.getElementById('signup-extra').style.display=mode==='signup'?'block':'none';
-  document.getElementById('auth-submit-btn').textContent=mode==='login'?'🚀 Login':'🎉 Create Account';
+  authMode = mode;
+  document.getElementById('tab-login').classList.toggle('active', mode==='login');
+  document.getElementById('tab-signup').classList.toggle('active', mode==='signup');
+  document.getElementById('auth-submit-btn').textContent = mode==='login'?t('loginBtn'):t('signupBtn');
   document.getElementById('auth-error').textContent='';
 }
-window.switchAuthTab=switchAuthTab;
+window.switchAuthTab = switchAuthTab;
 
 async function handleAuth() {
   const email=document.getElementById('auth-email').value.trim();
   const password=document.getElementById('auth-password').value;
   const errEl=document.getElementById('auth-error');
   const btn=document.getElementById('auth-submit-btn');
-  if(!email||!password){errEl.textContent='Please fill in all fields';return;}
+  if(!email||!password){errEl.textContent=t('fillFields');return;}
   btn.disabled=true;btn.textContent='...';
   try {
     if(authMode==='signup') await window._createUser(window._auth,email,password);
@@ -391,28 +659,43 @@ async function handleAuth() {
   } catch(e) {
     errEl.textContent=e.message.replace('Firebase: ','').replace(/\(.*\)/,'');
     btn.disabled=false;
-    btn.textContent=authMode==='login'?'🚀 Login':'🎉 Create Account';
+    btn.textContent=authMode==='login'?t('loginBtn'):t('signupBtn');
   }
 }
-window.handleAuth=handleAuth;
-
-// ✅ FIXED: Google login uses redirect (works on Safari/iPad)
-async function handleGoogle() {
-  try {
-    await window._googleSignIn(window._auth, window._googleProvider);
-    // Page will redirect to Google, then come back automatically
-  } catch(e) {
-    document.getElementById('auth-error').textContent='Google login failed. Try email instead.';
-  }
-}
-window.handleGoogle=handleGoogle;
+window.handleAuth = handleAuth;
 
 async function handleLogout() {
   await window._signOut(window._auth);
+  localStorage.removeItem('mtracker-lang');
 }
-window.handleLogout=handleLogout;
+window.handleLogout = handleLogout;
 
-// PAGE NAV
+// ── CLOUD ──
+async function saveToCloud() {
+  if(!window.currentUser)return;
+  try {
+    const ref=window._doc(window._db,'users',window.currentUser.uid);
+    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek,lang:currentLang});
+    showToast(t('savedCloud'));
+  } catch(e){showToast(t('saveFailed'));}
+}
+window.saveToCloud = saveToCloud;
+
+async function quickSave() {
+  if(!window.currentUser)return;
+  try {
+    const ref=window._doc(window._db,'users',window.currentUser.uid);
+    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek,lang:currentLang});
+  } catch(e){console.error(e);}
+}
+
+function showToast(msg) {
+  const t=document.getElementById('save-toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+// ── PAGE NAV ──
 function showPage(p) {
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
@@ -421,9 +704,9 @@ function showPage(p) {
   if(p==='settings') renderSettings();
   if(p==='tracker') renderTracker();
 }
-window.showPage=showPage;
+window.showPage = showPage;
 
-// TRACKER
+// ── TRACKER ──
 function renderTracker(){renderKidTabs();renderTrackerCard();renderWeekSummary();}
 
 function renderKidTabs() {
@@ -449,25 +732,27 @@ function renderTrackerCard() {
   if(!kid)return;
   const col=PALETTE[kid.colorIdx||0];
   const w=state.currentWeek[kid.id]||1;
+  const days=t('days');
   const wrap=document.getElementById('tracker-card-wrap');
   wrap.innerHTML='';
   const card=document.createElement('div');
   card.className='tracker-card';
   card.style.background=`linear-gradient(160deg,${col.light} 0%,#fff 60%)`;
   card.style.borderTop=`4px solid ${col.main}`;
-  const wb=document.createElement('div');
-  wb.className='week-bar';
+
+  const wb=document.createElement('div');wb.className='week-bar';
   for(let wk=1;wk<=WEEKS;wk++){
     const b=document.createElement('button');
-    b.className='week-btn'+(w===wk?' sel':'');
+    b.className='week-btn';
     b.style.background=w===wk?col.main:'#f0f0f0';
     b.style.color=w===wk?'#fff':'#999';
-    b.textContent='Week '+wk;
+    b.textContent=t('week')+' '+wk;
     b.onclick=()=>{state.currentWeek[kid.id]=wk;renderTracker();quickSave();};
     wb.appendChild(b);
   }
   card.appendChild(wb);
-  DAYS.forEach((day,d)=>{
+
+  days.forEach((day,d)=>{
     const checks=state.checks[kid.id][w][d];
     const done=checks.filter(Boolean).length;
     const total=kid.tasks.length;
@@ -479,17 +764,16 @@ function renderTrackerCard() {
     const header=document.createElement('div');
     header.className='day-header';
     header.innerHTML=`
-      <div style="display:flex;align-items:center;gap:8px;">
+      <div style="display:flex;align-items:center;gap:10px;">
         <span class="day-badge" style="background:${col.main}">${day}</span>
         <span class="day-score">${done}/${total} ${done===total&&total>0?'⭐':''}</span>
       </div>
       <span class="day-arrow">▼</span>`;
     header.onclick=()=>{openDays[key]=!block.classList.contains('open');block.classList.toggle('open');};
     block.appendChild(header);
-    const tasksDiv=document.createElement('div');
-    tasksDiv.className='day-tasks';
-    kid.tasks.forEach((task,t)=>{
-      const isDone=checks[t];
+    const td=document.createElement('div');td.className='day-tasks';
+    kid.tasks.forEach((task,t2)=>{
+      const isDone=checks[t2];
       const row=document.createElement('div');
       row.className='task-row'+(isDone?' done':'');
       row.innerHTML=`
@@ -498,10 +782,10 @@ function renderTrackerCard() {
         <div class="check-box ${isDone?'on':''}" style="${isDone?`background:${col.main};border-color:${col.main}`:''}">
           ${isDone?'✓':''}
         </div>`;
-      row.onclick=()=>toggleTask(d,t);
-      tasksDiv.appendChild(row);
+      row.onclick=()=>toggleTask(d,t2);
+      td.appendChild(row);
     });
-    block.appendChild(tasksDiv);
+    block.appendChild(td);
     card.appendChild(block);
   });
   wrap.appendChild(card);
@@ -512,15 +796,14 @@ function renderWeekSummary() {
   if(!kid)return;
   const col=PALETTE[kid.colorIdx||0];
   const w=state.currentWeek[kid.id]||1;
+  const days=t('days');
   const wrap=document.getElementById('week-summary-wrap');
   wrap.innerHTML='';
-  const box=document.createElement('div');
-  box.className='week-summary';
+  const box=document.createElement('div');box.className='week-summary';
   let totalDone=0,totalMax=0;
   const fullDays=[];
-  const chips=document.createElement('div');
-  chips.className='day-chips';
-  DAYS.forEach((day,d)=>{
+  const chips=document.createElement('div');chips.className='day-chips';
+  days.forEach((day,d)=>{
     const checks=state.checks[kid.id][w][d];
     const done=checks.filter(Boolean).length;
     const total=kid.tasks.length;
@@ -535,14 +818,14 @@ function renderWeekSummary() {
   });
   const pct=totalMax>0?Math.round((totalDone/totalMax)*100):0;
   const earned=fullDays.filter(Boolean).length;
-  box.innerHTML=`<div class="sum-title">📅 Week ${w} Progress</div>`;
+  box.innerHTML=`<div class="sum-title">${t('weekProgress')} ${w}</div>`;
   box.appendChild(chips);
   box.innerHTML+=`
-    <div class="prog-label"><span>Total Progress</span><span>${totalDone}/${totalMax} (${pct}%)</span></div>
+    <div class="prog-label"><span>${t('totalProgress')}</span><span>${totalDone}/${totalMax} (${pct}%)</span></div>
     <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:linear-gradient(90deg,${col.grad})"></div></div>
     <div class="stars-row">${Array.from({length:7},(_,i)=>`<span class="s-icon ${fullDays[i]?'':'s-empty'}">⭐</span>`).join('')}</div>`;
   if(earned>=3){
-    const msg=earned===7?'🏆 PERFECT WEEK! CHAMPION!':earned>=5?`🥇 Amazing! ${earned}/7 perfect days!`:`🥈 Great job! ${earned}/7 days!`;
+    const msg=earned===7?t('perfectWeek'):earned>=5?`${t('amazing')} ${earned}/7 ${t('perfectDays')}`:`${t('great')} ${earned}/7 ${t('perfectDays')}`;
     const ach=document.createElement('div');
     ach.className='achieve show';
     ach.style.cssText=`background:${col.light};color:${col.dark};border-color:${col.main}`;
@@ -552,17 +835,17 @@ function renderWeekSummary() {
   wrap.appendChild(box);
 }
 
-async function toggleTask(d,t) {
+async function toggleTask(d,t2) {
   const kid=state.kids[state.currentKid];
   const w=state.currentWeek[kid.id]||1;
-  const val=!state.checks[kid.id][w][d][t];
-  state.checks[kid.id][w][d][t]=val;
+  const val=!state.checks[kid.id][w][d][t2];
+  state.checks[kid.id][w][d][t2]=val;
   if(val) spawnConfetti(kid.colorIdx||0);
   renderTrackerCard();renderWeekSummary();
   await quickSave();
 }
 
-// SETTINGS
+// ── SETTINGS ──
 function renderSettings() {
   const list=document.getElementById('settings-kids-list');
   list.innerHTML='';
@@ -574,18 +857,18 @@ function renderSettings() {
       <div class="kcs-top">
         <div class="kid-avatar-big" style="background:${col.light}">${kid.animal}</div>
         <div style="flex:1">
-          <input class="kid-name-input" value="${kid.name}" placeholder="Child name & age"
+          <input class="kid-name-input" value="${kid.name}" placeholder="Name"
             onchange="state.kids[${i}].name=this.value" style="border-color:${col.main}40">
         </div>
       </div>
-      <div class="section-label">🎨 Color Theme</div>
+      <div class="section-label">${t('colorTheme')}</div>
       <div class="color-picker" id="cp-${i}"></div>
-      <div class="section-label">🐾 Animal Avatar</div>
+      <div class="section-label">${t('animalAvatar')}</div>
       <div class="animal-picker" id="ap-${i}"></div>
-      <div class="section-label">✅ Daily Tasks</div>
+      <div class="section-label">${t('dailyTasks')}</div>
       <div class="tasks-editor" id="te-${i}"></div>
-      <button class="add-task-btn" onclick="addTask(${i})">➕ Add Task</button>
-      ${state.kids.length>1?`<button class="del-kid-btn" onclick="deleteKid(${i})">🗑 Remove ${kid.name}</button>`:''}
+      <button class="add-task-btn" onclick="addTask(${i})">${t('addTask')}</button>
+      ${state.kids.length>1?`<button class="del-kid-btn" onclick="deleteKid(${i})">${t('removeKid')} ${kid.name}</button>`:''}
     `;
     list.appendChild(card);
     const cp=card.querySelector('#cp-'+i);
@@ -605,14 +888,14 @@ function renderSettings() {
       ap.appendChild(btn);
     });
     const te=card.querySelector('#te-'+i);
-    kid.tasks.forEach((task,t)=>{
+    kid.tasks.forEach((task,t2)=>{
       const row=document.createElement('div');
       row.className='task-edit-row';
       row.innerHTML=`
-        <div class="task-icon-pick" onclick="openEmojiModal(${i},${t})">${task.icon}</div>
-        <input class="task-name-inp" value="${task.name}" placeholder="Task name"
-          onchange="state.kids[${i}].tasks[${t}].name=this.value">
-        <button class="del-task-btn" onclick="deleteTask(${i},${t})">✕</button>`;
+        <div class="task-icon-pick" onclick="openEmojiModal(${i},${t2})">${task.icon}</div>
+        <input class="task-name-inp" value="${task.name}" placeholder="Task"
+          onchange="state.kids[${i}].tasks[${t2}].name=this.value">
+        <button class="del-task-btn" onclick="deleteTask(${i},${t2})">✕</button>`;
       te.appendChild(row);
     });
   });
@@ -623,14 +906,15 @@ function addKid(){
   const used=state.kids.map(k=>k.colorIdx||0);
   let colorIdx=0;
   for(let c=0;c<PALETTE.length;c++){if(!used.includes(c)){colorIdx=c;break;}}
-  state.kids.push({id,name:'Child '+(state.kids.length+1),animal:ANIMALS[Math.floor(Math.random()*ANIMALS.length)],colorIdx,tasks:JSON.parse(JSON.stringify(DEFAULT_TASKS))});
+  const lang=T[currentLang];
+  state.kids.push({id,name:'Child '+(state.kids.length+1),animal:ANIMALS[Math.floor(Math.random()*ANIMALS.length)],colorIdx,tasks:JSON.parse(JSON.stringify(lang.tasks))});
   fixState();renderSettings();
 }
 window.addKid=addKid;
 
 function deleteKid(i){
   if(state.kids.length<=1)return;
-  if(!confirm('Remove '+state.kids[i].name+'?'))return;
+  if(!confirm(t('removeKid')+' '+state.kids[i].name+'?'))return;
   state.kids.splice(i,1);
   if(state.currentKid>=state.kids.length)state.currentKid=0;
   renderSettings();
@@ -670,7 +954,7 @@ window.closeEmojiModal=closeEmojiModal;
 function spawnConfetti(colorIdx){
   const col=PALETTE[colorIdx||0];
   const colors=[col.main,col.dark,'#FFD700','#fff'];
-  for(let i=0;i<14;i++){
+  for(let i=0;i<16;i++){
     const c=document.createElement('div');
     c.className='confetti-p';
     c.style.left=(Math.random()*100)+'vw';
@@ -683,6 +967,5 @@ function spawnConfetti(colorIdx){
   }
 }
 </script>
-
 </body>
 </html>
