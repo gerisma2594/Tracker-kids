@@ -8,17 +8,16 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;max-width:430px;margin:0 auto;min-height:100vh;overflow-x:hidden;background:#FFF9F0;}
-
-/* FONTS */
 body{font-family:'Nunito',sans-serif;}
-body.lang-ar{font-family:'Tajawal',sans-serif;direction:rtl;}
-body.lang-ar .app-header,
-body.lang-ar .auth-card,
+body.lang-ar{font-family:'Tajawal',sans-serif;}
 body.lang-ar .tracker-card,
 body.lang-ar .week-summary,
-body.lang-ar .kid-card-settings{direction:rtl;text-align:right;}
+body.lang-ar .kid-card-settings,
+body.lang-ar .auth-card,
+body.lang-ar .day-header,
+body.lang-ar .task-row{direction:rtl;}
 
-/* LANGUAGE PICKER */
+/* LANGUAGE SCREEN */
 .lang-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#FF6B6B22,#4ECDC422);}
 .lang-logo{font-size:4rem;margin-bottom:12px;}
 .lang-title{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#FF6B6B;margin-bottom:8px;text-align:center;}
@@ -26,10 +25,9 @@ body.lang-ar .kid-card-settings{direction:rtl;text-align:right;}
 .lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;}
 .lang-btn{padding:20px 16px;border:3px solid #eee;border-radius:20px;background:#fff;cursor:pointer;text-align:center;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.06);}
 .lang-btn:active{transform:scale(.97);}
-.lang-btn .lang-flag{font-size:2.5rem;display:block;margin-bottom:8px;}
-.lang-btn .lang-name{font-size:1.1rem;font-weight:800;color:#333;display:block;}
-.lang-btn .lang-native{font-size:.9rem;color:#aaa;font-weight:700;display:block;margin-top:2px;}
-.lang-btn.selected{border-color:#FF6B6B;background:#FFF5F5;}
+.lang-flag{font-size:2.5rem;display:block;margin-bottom:8px;}
+.lang-name{font-size:1.1rem;font-weight:800;color:#333;display:block;}
+.lang-native{font-size:.9rem;color:#aaa;font-weight:700;display:block;margin-top:2px;}
 
 /* AUTH */
 .auth-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#FF6B6B22,#4ECDC422);}
@@ -42,7 +40,7 @@ body.lang-ar .kid-card-settings{direction:rtl;text-align:right;}
 .auth-tab.active{background:#fff;color:#FF6B6B;box-shadow:0 2px 8px rgba(0,0,0,.1);}
 .auth-input{width:100%;padding:14px 16px;border:2.5px solid #eee;border-radius:14px;font-size:1rem;font-weight:700;outline:none;margin-bottom:14px;transition:border-color .2s;background:#fafafa;}
 .auth-input:focus{border-color:#FF6B6B;background:#fff;}
-.auth-btn{width:100%;padding:16px;border:none;border-radius:16px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-size:1.1rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:4px;letter-spacing:.5px;}
+.auth-btn{width:100%;padding:16px;border:none;border-radius:16px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-size:1.1rem;font-weight:800;cursor:pointer;margin-top:4px;}
 .auth-btn:disabled{opacity:.6;}
 .auth-error{color:#FF6B6B;font-size:.9rem;font-weight:800;margin-bottom:12px;text-align:center;min-height:20px;}
 .back-lang-btn{margin-top:20px;background:none;border:none;color:#aaa;font-size:.9rem;font-weight:800;cursor:pointer;text-decoration:underline;}
@@ -55,115 +53,137 @@ body.lang-ar .kid-card-settings{direction:rtl;text-align:right;}
 
 /* APP */
 .app-wrap{display:none;}
-.app-header{background:linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#4ECDC4);padding:16px;position:relative;overflow:hidden;}
+.app-header{background:linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#4ECDC4);padding:14px 16px 16px;position:relative;overflow:hidden;}
 .app-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.07'%3E%3Cpath d='M20 20.5V18H0v5h20v20.5h5V23h20v-5H25V2.5h-5z'/%3E%3C/g%3E%3C/svg%3E");}
 .header-row{display:flex;align-items:center;justify-content:space-between;position:relative;}
-.header-title{font-family:'Fredoka One',cursive;font-size:1.6rem;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.1);}
+.header-title{font-family:'Fredoka One',cursive;font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.1);}
 .header-right{display:flex;align-items:center;gap:8px;}
-.user-email{color:rgba(255,255,255,.85);font-size:.75rem;font-weight:800;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:.75rem;font-weight:800;padding:6px 12px;border-radius:10px;cursor:pointer;}
+.user-email{color:rgba(255,255,255,.85);font-size:.7rem;font-weight:800;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:.72rem;font-weight:800;padding:6px 10px;border-radius:10px;cursor:pointer;}
 
 /* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:2px solid #f0f0f0;display:flex;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.08);}
-.nav-btn{flex:1;padding:12px 4px 10px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.7rem;font-weight:800;color:#bbb;transition:color .2s;}
+.nav-btn{flex:1;padding:10px 4px 8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.68rem;font-weight:800;color:#bbb;transition:color .2s;}
 .nav-btn.active{color:#FF6B6B;}
-.nav-icon{font-size:1.5rem;}
+.nav-icon{font-size:1.4rem;}
 
-/* PAGES */
 .page{display:none;padding-bottom:90px;}
 .page.active{display:block;}
 
 /* KIDS TABS */
-.kids-tabs{display:flex;gap:0;overflow-x:auto;padding:14px 12px 0;scrollbar-width:none;}
+.kids-tabs{display:flex;gap:0;overflow-x:auto;padding:12px 12px 0;scrollbar-width:none;}
 .kids-tabs::-webkit-scrollbar{display:none;}
-.kid-tab{flex-shrink:0;padding:12px 16px;border:none;border-radius:16px 16px 0 0;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#999;display:flex;align-items:center;gap:8px;}
-.kid-tab.active{color:#fff;transform:translateY(-3px);box-shadow:0 -4px 12px rgba(0,0,0,.12);}
-.add-kid-tab{flex-shrink:0;padding:12px 16px;border:2.5px dashed #ddd;border-radius:16px 16px 0 0;background:none;cursor:pointer;font-size:1.3rem;color:#ccc;}
+.kid-tab{flex-shrink:0;padding:10px 14px;border:none;border-radius:14px 14px 0 0;font-size:.9rem;font-weight:800;cursor:pointer;background:#f0f0f0;color:#999;display:flex;align-items:center;gap:6px;transition:all .2s;}
+.kid-tab.active{color:#fff;transform:translateY(-2px);box-shadow:0 -3px 10px rgba(0,0,0,.1);}
+.add-kid-tab{flex-shrink:0;padding:10px 14px;border:2.5px dashed #ddd;border-radius:14px 14px 0 0;background:none;cursor:pointer;font-size:1.2rem;color:#ccc;}
 
 /* TRACKER CARD */
-.tracker-card{margin:0 12px;border-radius:0 0 22px 22px;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.1);}
-.week-bar{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.tracker-card{margin:0 12px;border-radius:0 0 20px 20px;padding:14px;box-shadow:0 6px 24px rgba(0,0,0,.1);}
+
+/* MONTH SELECTOR */
+.month-selector{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.month-nav-btn{width:36px;height:36px;border-radius:50%;border:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;background:#f5f5f5;color:#666;}
+.month-nav-btn:active{transform:scale(.9);}
+.month-year-display{text-align:center;flex:1;}
+.month-name{font-family:'Fredoka One',cursive;font-size:1.2rem;display:block;}
+.year-name{font-size:.8rem;font-weight:800;color:#aaa;display:block;}
+
+/* MONTH GRID PICKER */
+.month-grid-wrap{display:none;background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,.1);}
+.month-grid-wrap.open{display:block;}
+.month-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.month-chip{padding:10px 6px;border-radius:12px;border:2.5px solid transparent;background:#f5f5f5;font-size:.85rem;font-weight:800;cursor:pointer;text-align:center;transition:all .2s;}
+.month-chip.sel{color:#fff;}
+.month-chip:active{transform:scale(.95);}
+.year-selector{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px;}
+.year-btn{width:32px;height:32px;border-radius:50%;border:none;background:#f5f5f5;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.year-display{font-family:'Fredoka One',cursive;font-size:1.1rem;color:#444;}
+
+/* WEEK BAR */
+.week-bar{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
 .week-bar::-webkit-scrollbar{display:none;}
-.week-btn{flex-shrink:0;padding:8px 14px;border-radius:20px;border:none;font-size:.85rem;font-weight:800;cursor:pointer;background:#f0f0f0;color:#999;transition:all .2s;white-space:nowrap;}
+.week-btn{flex-shrink:0;padding:7px 12px;border-radius:18px;border:none;font-size:.8rem;font-weight:800;cursor:pointer;background:#f0f0f0;color:#999;transition:all .2s;white-space:nowrap;text-align:center;}
+.week-btn .week-dates{display:block;font-size:.65rem;font-weight:700;opacity:.8;margin-top:2px;}
 
 /* DAY ACCORDION */
-.day-block{margin-bottom:10px;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);}
-.day-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:#fff;}
-.day-badge{font-size:.85rem;font-weight:800;color:#fff;padding:4px 14px;border-radius:14px;}
-.day-score{font-size:.85rem;font-weight:800;color:#aaa;}
-.day-arrow{font-size:.8rem;color:#ccc;transition:transform .2s;}
+.day-block{margin-bottom:8px;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.day-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;background:#fff;}
+.day-left{display:flex;align-items:center;gap:8px;}
+.day-badge{font-size:.8rem;font-weight:800;color:#fff;padding:4px 12px;border-radius:12px;}
+.day-date-num{font-size:1rem;font-weight:800;color:#aaa;}
+.day-score{font-size:.8rem;font-weight:800;color:#aaa;}
+.day-arrow{font-size:.75rem;color:#ccc;transition:transform .2s;}
 .day-block.open .day-arrow{transform:rotate(180deg);}
 .day-tasks{display:none;background:#fafafa;}
 .day-block.open .day-tasks{display:block;}
-.task-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0;cursor:pointer;user-select:none;transition:background .15s;}
+.task-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;user-select:none;}
 .task-row:last-child{border-bottom:none;}
 .task-row.done{background:#fefefe;}
-.t-icon{font-size:1.5rem;min-width:32px;text-align:center;}
-.t-name{flex:1;font-size:1rem;font-weight:700;color:#333;}
+.t-icon{font-size:1.4rem;min-width:30px;text-align:center;}
+.t-name{flex:1;font-size:.95rem;font-weight:700;color:#333;}
 .task-row.done .t-name{text-decoration:line-through;color:#ccc;}
-.check-box{width:30px;height:30px;border-radius:50%;border:3px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;transition:all .2s;}
+.check-box{width:28px;height:28px;border-radius:50%;border:2.5px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;transition:all .2s;}
 .check-box.on{color:#fff;}
 
 /* SUMMARY */
-.week-summary{background:#fff;border-radius:20px;padding:18px;margin:14px 12px 0;box-shadow:0 4px 16px rgba(0,0,0,.07);}
-.sum-title{font-size:1.1rem;font-weight:800;margin-bottom:14px;}
-.day-chips{display:flex;gap:5px;margin-bottom:14px;}
-.d-chip{flex:1;text-align:center;padding:8px 2px;border-radius:12px;background:#f5f5f5;}
-.d-chip .cs{font-size:1rem;font-weight:800;display:block;}
-.d-chip .cl{font-size:.6rem;color:#aaa;font-weight:800;}
-.prog-label{display:flex;justify-content:space-between;font-size:.85rem;font-weight:800;color:#777;margin-bottom:6px;}
-.prog-bar{height:16px;border-radius:20px;background:#f0f0f0;overflow:hidden;}
+.week-summary{background:#fff;border-radius:18px;padding:16px;margin:12px 12px 0;box-shadow:0 4px 16px rgba(0,0,0,.07);}
+.sum-title{font-size:1rem;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.sum-dates{font-size:.75rem;color:#aaa;font-weight:700;}
+.day-chips{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;}
+.d-chip{flex-shrink:0;flex:1;min-width:38px;text-align:center;padding:7px 2px;border-radius:10px;background:#f5f5f5;}
+.d-chip .cs{font-size:.9rem;font-weight:800;display:block;}
+.d-chip .cl{font-size:.58rem;color:#aaa;font-weight:800;}
+.d-chip .cd{font-size:.6rem;color:#bbb;font-weight:700;}
+.prog-label{display:flex;justify-content:space-between;font-size:.8rem;font-weight:800;color:#777;margin-bottom:5px;}
+.prog-bar{height:14px;border-radius:20px;background:#f0f0f0;overflow:hidden;}
 .prog-fill{height:100%;border-radius:20px;transition:width .6s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
 .prog-fill::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:sh 2s infinite;}
 @keyframes sh{to{left:200%;}}
-.stars-row{display:flex;gap:4px;justify-content:center;margin-top:12px;}
-.s-icon{font-size:1.4rem;}
+.stars-row{display:flex;gap:3px;justify-content:center;margin-top:10px;}
+.s-icon{font-size:1.3rem;}
 .s-empty{filter:grayscale(1) opacity(.25);}
-.achieve{text-align:center;padding:12px;border-radius:16px;margin-top:12px;font-size:.95rem;font-weight:800;display:none;border:2.5px dashed;}
+.achieve{text-align:center;padding:10px;border-radius:14px;margin-top:10px;font-size:.9rem;font-weight:800;display:none;border:2px dashed;}
 .achieve.show{display:block;animation:pop .4s ease;}
 @keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 
 /* SETTINGS */
-.settings-header{padding:18px 16px;font-size:1.3rem;font-weight:800;color:#444;}
+.settings-header{padding:16px;font-size:1.2rem;font-weight:800;color:#444;}
 .kids-list{padding:0 12px;}
-.kid-card-settings{background:#fff;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 3px 14px rgba(0,0,0,.08);}
-.kcs-top{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
-.kid-avatar-big{font-size:2.6rem;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.kid-name-input{font-size:1.05rem;font-weight:800;border:2.5px solid #eee;border-radius:12px;padding:8px 12px;width:100%;outline:none;color:#333;background:#fafafa;}
-.kid-name-input:focus{border-color:#FF6B6B;background:#fff;}
-.section-label{font-size:.75rem;font-weight:800;color:#aaa;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;}
-.color-picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
-.color-dot{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .2s;}
+.kid-card-settings{background:#fff;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,.07);}
+.kcs-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.kid-avatar-big{font-size:2.4rem;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kid-name-input{font-size:1rem;font-weight:800;border:2.5px solid #eee;border-radius:12px;padding:8px 12px;width:100%;outline:none;color:#333;background:#fafafa;}
+.kid-name-input:focus{border-color:#FF6B6B;}
+.section-label{font-size:.72rem;font-weight:800;color:#aaa;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+.color-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.color-dot{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .2s;}
 .color-dot.sel{border-color:#333;transform:scale(1.2);}
-.animal-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.animal-btn{font-size:1.6rem;width:46px;height:46px;border-radius:14px;border:2.5px solid transparent;background:#f5f5f5;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.animal-picker{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.animal-btn{font-size:1.5rem;width:44px;height:44px;border-radius:12px;border:2.5px solid transparent;background:#f5f5f5;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .animal-btn.sel{border-color:#FF6B6B;background:#FFE5E5;transform:scale(1.15);}
-.task-edit-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.task-icon-pick{font-size:1.3rem;width:44px;height:44px;border-radius:12px;border:2.5px solid #eee;background:#fafafa;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.task-name-inp{flex:1;padding:10px 12px;border:2.5px solid #eee;border-radius:12px;font-size:.95rem;font-weight:700;outline:none;background:#fafafa;}
-.task-name-inp:focus{border-color:#FF6B6B;background:#fff;}
-.del-task-btn{width:34px;height:34px;border-radius:50%;border:none;background:#FFE5E5;color:#FF6B6B;font-size:1.1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.add-task-btn{width:100%;padding:12px;border:2.5px dashed #ddd;border-radius:14px;background:none;font-size:1rem;font-weight:800;color:#aaa;cursor:pointer;margin-top:6px;}
-.del-kid-btn{width:100%;padding:12px;border:2.5px solid #FFE5E5;border-radius:14px;background:none;font-size:.95rem;font-weight:800;color:#FF6B6B;cursor:pointer;margin-top:10px;}
-.add-kid-big-btn{display:block;width:calc(100% - 24px);margin:0 12px 14px;padding:16px;border:2.5px dashed #ddd;border-radius:20px;background:none;font-size:1.05rem;font-weight:800;color:#aaa;cursor:pointer;text-align:center;}
-.save-settings-btn{display:block;width:calc(100% - 24px);margin:0 12px 16px;padding:16px;border:none;border-radius:20px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-size:1.05rem;font-weight:800;cursor:pointer;text-align:center;}
+.task-edit-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.task-icon-pick{font-size:1.2rem;width:40px;height:40px;border-radius:10px;border:2px solid #eee;background:#fafafa;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.task-name-inp{flex:1;padding:9px 12px;border:2px solid #eee;border-radius:10px;font-size:.9rem;font-weight:700;outline:none;background:#fafafa;}
+.task-name-inp:focus{border-color:#FF6B6B;}
+.del-task-btn{width:32px;height:32px;border-radius:50%;border:none;background:#FFE5E5;color:#FF6B6B;font-size:1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.add-task-btn{width:100%;padding:11px;border:2.5px dashed #ddd;border-radius:12px;background:none;font-size:.95rem;font-weight:800;color:#aaa;cursor:pointer;margin-top:4px;}
+.del-kid-btn{width:100%;padding:11px;border:2px solid #FFE5E5;border-radius:12px;background:none;font-size:.9rem;font-weight:800;color:#FF6B6B;cursor:pointer;margin-top:8px;}
+.add-kid-big-btn{display:block;width:calc(100% - 24px);margin:0 12px 12px;padding:14px;border:2.5px dashed #ddd;border-radius:18px;background:none;font-size:1rem;font-weight:800;color:#aaa;cursor:pointer;text-align:center;}
+.save-settings-btn{display:block;width:calc(100% - 24px);margin:0 12px 16px;padding:14px;border:none;border-radius:18px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;font-size:1rem;font-weight:800;cursor:pointer;text-align:center;}
 
 /* EMOJI MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:200;}
 .modal-bg.open{display:flex;}
-.emoji-modal{background:#fff;border-radius:26px 26px 0 0;padding:22px;width:100%;max-width:430px;max-height:70vh;overflow-y:auto;animation:slideUp .3s ease;}
+.emoji-modal{background:#fff;border-radius:26px 26px 0 0;padding:20px;width:100%;max-width:430px;max-height:70vh;overflow-y:auto;animation:slideUp .3s ease;}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.emoji-modal h3{font-size:1.2rem;font-weight:800;margin-bottom:16px;}
-.emoji-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
-.e-btn{font-size:1.6rem;width:44px;height:44px;border-radius:12px;border:none;background:#f5f5f5;cursor:pointer;}
-.modal-close{width:100%;padding:14px;border:none;border-radius:16px;background:#f0f0f0;font-size:1rem;font-weight:800;color:#666;cursor:pointer;margin-top:14px;}
+.emoji-modal h3{font-size:1.1rem;font-weight:800;margin-bottom:14px;}
+.emoji-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
+.e-btn{font-size:1.5rem;width:42px;height:42px;border-radius:10px;border:none;background:#f5f5f5;cursor:pointer;}
+.modal-close{width:100%;padding:13px;border:none;border-radius:14px;background:#f0f0f0;font-size:1rem;font-weight:800;color:#666;cursor:pointer;margin-top:12px;}
 
-/* TOAST */
-.save-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:24px;font-size:.9rem;font-weight:800;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
+.save-toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:24px;font-size:.88rem;font-weight:800;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
 .save-toast.show{opacity:1;}
-
-/* CONFETTI */
-.confetti-p{position:fixed;width:10px;height:10px;top:-20px;animation:cf 1.4s ease-in forwards;border-radius:2px;z-index:999;pointer-events:none;}
+.confetti-p{position:fixed;width:9px;height:9px;top:-20px;animation:cf 1.4s ease-in forwards;border-radius:2px;z-index:999;pointer-events:none;}
 @keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 </style>
 </head>
@@ -175,11 +195,11 @@ body.lang-ar .kid-card-settings{direction:rtl;text-align:right;}
   <p id="loading-text">Loading...</p>
 </div>
 
-<!-- LANGUAGE PICKER -->
+<!-- LANGUAGE SCREEN -->
 <div class="lang-screen" id="lang-screen" style="display:none;">
   <div class="lang-logo">⭐</div>
   <div class="lang-title">Mission Tracker</div>
-  <div class="lang-sub">Choose your language / Choisissez votre langue</div>
+  <div class="lang-sub">Choose your language</div>
   <div class="lang-grid">
     <button class="lang-btn" onclick="setLang('en')">
       <span class="lang-flag">🇬🇧</span>
@@ -233,17 +253,20 @@ body.lang-ar .kid-card-settings{direction:rtl;text-align:right;}
       </div>
     </div>
   </div>
+
   <div class="page active" id="page-tracker">
     <div class="kids-tabs" id="kids-tabs"></div>
     <div id="tracker-card-wrap"></div>
     <div id="week-summary-wrap"></div>
   </div>
+
   <div class="page" id="page-settings">
     <div class="settings-header" id="settings-header-text">⚙️ Customize</div>
     <div class="kids-list" id="settings-kids-list"></div>
     <button class="add-kid-big-btn" id="add-kid-btn" onclick="addKid()">➕ Add Child</button>
     <button class="save-settings-btn" id="save-cloud-btn" onclick="saveToCloud()">☁️ Save to Cloud</button>
   </div>
+
   <div class="bottom-nav">
     <button class="nav-btn active" id="nav-tracker" onclick="showPage('tracker')">
       <span class="nav-icon">📋</span>
@@ -311,13 +334,8 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('app-wrap').style.display = 'none';
     const savedLang = localStorage.getItem('mtracker-lang');
-    if (savedLang) {
-      currentLang = savedLang;
-      applyBodyLang();
-      showAuth();
-    } else {
-      document.getElementById('lang-screen').style.display = 'flex';
-    }
+    if (savedLang) { currentLang = savedLang; applyBodyLang(); showAuth(); }
+    else document.getElementById('lang-screen').style.display = 'flex';
   }
 });
 
@@ -329,20 +347,19 @@ async function loadFromCloud(uid) {
       const data = snap.data();
       state.kids = data.kids || defaultKids();
       state.checks = data.checks || {};
+      state.currentMonth = data.currentMonth || {month: new Date().getMonth(), year: new Date().getFullYear()};
       state.currentWeek = data.currentWeek || {};
       if (data.lang) currentLang = data.lang;
       fixState();
     } else {
       state.kids = defaultKids();
       state.checks = {};
+      state.currentMonth = {month: new Date().getMonth(), year: new Date().getFullYear()};
       state.currentWeek = {};
       fixState();
       await saveToCloud();
     }
-  } catch(e) {
-    state.kids = defaultKids();
-    fixState();
-  }
+  } catch(e) { state.kids = defaultKids(); fixState(); }
 }
 window.loadFromCloud = loadFromCloud;
 </script>
@@ -351,197 +368,121 @@ window.loadFromCloud = loadFromCloud;
 // ── TRANSLATIONS ──
 const T = {
   en: {
-    appTitle: 'Mission Tracker',
-    appSub: "Your kids' habit tracker — saved forever!",
-    login: 'Login', signup: 'Sign Up',
-    emailPlaceholder: 'Your email address',
-    passwordPlaceholder: 'Password (min 6 characters)',
-    loginBtn: '🚀 Login',
-    signupBtn: '🎉 Create Account',
-    fillFields: 'Please fill in all fields',
-    logout: 'Logout',
-    tracker: 'Tracker',
-    customize: 'Customize',
-    settingsHeader: '⚙️ Customize Kids',
-    addKid: '➕ Add Another Child',
-    saveCloud: '☁️ Save to Cloud',
-    savedCloud: '☁️ Saved to cloud!',
-    saveFailed: '⚠️ Save failed',
-    colorTheme: '🎨 Color Theme',
-    animalAvatar: '🐾 Animal Avatar',
-    dailyTasks: '✅ Daily Tasks',
-    addTask: '➕ Add Task',
-    removeKid: '🗑 Remove',
-    weekProgress: '📅 Week Progress',
-    totalProgress: 'Total Progress',
-    perfectWeek: '🏆 PERFECT WEEK! You are a CHAMPION!',
-    amazing: '🥇 Amazing!',
-    great: '🥈 Great job!',
-    perfectDays: 'perfect days!',
-    pickEmoji: 'Pick an Emoji',
-    close: 'Close',
-    changeLang: '🌍 Change language',
-    loading: 'Loading...',
-    week: 'Week',
-    days: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-    tasks: [
-      {icon:'⏰',name:'Wake up on time'},
-      {icon:'🦷',name:'Brush teeth'},
-      {icon:'🛏',name:'Make the bed'},
-      {icon:'📚',name:'Do homework'},
-      {icon:'🧹',name:'Tidy my room'},
-      {icon:'🍎',name:'Eat fruits'},
-      {icon:'📖',name:'Read 15 mins'},
-      {icon:'💧',name:'Drink water'},
+    appTitle:'Mission Tracker', appSub:"Your kids' habit tracker — saved forever!",
+    login:'Login', signup:'Sign Up',
+    emailPlaceholder:'Your email address', passwordPlaceholder:'Password (min 6 characters)',
+    loginBtn:'🚀 Login', signupBtn:'🎉 Create Account',
+    fillFields:'Please fill in all fields',
+    logout:'Logout', tracker:'Tracker', customize:'Customize',
+    settingsHeader:'⚙️ Customize Kids', addKid:'➕ Add Another Child',
+    saveCloud:'☁️ Save to Cloud', savedCloud:'☁️ Saved!', saveFailed:'⚠️ Save failed',
+    colorTheme:'🎨 Color Theme', animalAvatar:'🐾 Animal Avatar',
+    dailyTasks:'✅ Daily Tasks', addTask:'➕ Add Task', removeKid:'🗑 Remove',
+    weekProgress:'📅 Progress', totalProgress:'Total Progress',
+    perfectWeek:'🏆 PERFECT WEEK! You are a CHAMPION!',
+    amazing:'🥇 Amazing!', great:'🥈 Great job!', perfectDays:'perfect days!',
+    pickEmoji:'Pick an Emoji', close:'Close', changeLang:'🌍 Change language',
+    loading:'Loading...', week:'Week',
+    months:['January','February','March','April','May','June','July','August','September','October','November','December'],
+    monthsShort:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    tasks:[
+      {icon:'⏰',name:'Wake up on time'},{icon:'🦷',name:'Brush teeth'},
+      {icon:'🛏',name:'Make the bed'},{icon:'📚',name:'Do homework'},
+      {icon:'🧹',name:'Tidy my room'},{icon:'🍎',name:'Eat fruits'},
+      {icon:'📖',name:'Read 15 mins'},{icon:'💧',name:'Drink water'},
       {icon:'😴',name:'Sleep on time'},
     ],
-    kid1Name: 'Alex (10)', kid2Name: 'Sam (8)',
+    kid1Name:'Alex (10)', kid2Name:'Sam (8)',
   },
   fr: {
-    appTitle: 'Suivi des Missions',
-    appSub: 'Le suivi des habitudes de vos enfants — sauvegardé pour toujours!',
-    login: 'Connexion', signup: "S'inscrire",
-    emailPlaceholder: 'Votre adresse email',
-    passwordPlaceholder: 'Mot de passe (min 6 caractères)',
-    loginBtn: '🚀 Se connecter',
-    signupBtn: '🎉 Créer un compte',
-    fillFields: 'Veuillez remplir tous les champs',
-    logout: 'Déconnexion',
-    tracker: 'Suivi',
-    customize: 'Personnaliser',
-    settingsHeader: '⚙️ Personnaliser',
-    addKid: '➕ Ajouter un enfant',
-    saveCloud: '☁️ Sauvegarder',
-    savedCloud: '☁️ Sauvegardé!',
-    saveFailed: '⚠️ Échec de sauvegarde',
-    colorTheme: '🎨 Couleur',
-    animalAvatar: '🐾 Animal',
-    dailyTasks: '✅ Tâches quotidiennes',
-    addTask: '➕ Ajouter une tâche',
-    removeKid: '🗑 Supprimer',
-    weekProgress: '📅 Progrès de la semaine',
-    totalProgress: 'Progrès total',
-    perfectWeek: '🏆 SEMAINE PARFAITE! Tu es un CHAMPION!',
-    amazing: '🥇 Incroyable!',
-    great: '🥈 Bravo!',
-    perfectDays: 'jours parfaits!',
-    pickEmoji: 'Choisir un emoji',
-    close: 'Fermer',
-    changeLang: '🌍 Changer de langue',
-    loading: 'Chargement...',
-    week: 'Semaine',
-    days: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
-    tasks: [
-      {icon:'⏰',name:'Se lever à l\'heure'},
-      {icon:'🦷',name:'Se brosser les dents'},
-      {icon:'🛏',name:'Faire son lit'},
-      {icon:'📚',name:'Faire ses devoirs'},
-      {icon:'🧹',name:'Ranger sa chambre'},
-      {icon:'🍎',name:'Manger des fruits'},
-      {icon:'📖',name:'Lire 15 min'},
-      {icon:'💧',name:'Boire de l\'eau'},
-      {icon:'😴',name:'Dormir à l\'heure'},
+    appTitle:'Suivi des Missions', appSub:'Le suivi des habitudes de vos enfants!',
+    login:'Connexion', signup:"S'inscrire",
+    emailPlaceholder:'Votre adresse email', passwordPlaceholder:'Mot de passe (min 6 caractères)',
+    loginBtn:'🚀 Se connecter', signupBtn:'🎉 Créer un compte',
+    fillFields:'Veuillez remplir tous les champs',
+    logout:'Déconnexion', tracker:'Suivi', customize:'Personnaliser',
+    settingsHeader:'⚙️ Personnaliser', addKid:'➕ Ajouter un enfant',
+    saveCloud:'☁️ Sauvegarder', savedCloud:'☁️ Sauvegardé!', saveFailed:'⚠️ Échec',
+    colorTheme:'🎨 Couleur', animalAvatar:'🐾 Animal',
+    dailyTasks:'✅ Tâches quotidiennes', addTask:'➕ Ajouter une tâche', removeKid:'🗑 Supprimer',
+    weekProgress:'📅 Progrès', totalProgress:'Progrès total',
+    perfectWeek:'🏆 SEMAINE PARFAITE! Tu es un CHAMPION!',
+    amazing:'🥇 Incroyable!', great:'🥈 Bravo!', perfectDays:'jours parfaits!',
+    pickEmoji:'Choisir un emoji', close:'Fermer', changeLang:'🌍 Changer de langue',
+    loading:'Chargement...', week:'Semaine',
+    months:['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+    monthsShort:['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+    days:['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
+    tasks:[
+      {icon:'⏰',name:"Se lever à l'heure"},{icon:'🦷',name:'Se brosser les dents'},
+      {icon:'🛏',name:'Faire son lit'},{icon:'📚',name:'Faire ses devoirs'},
+      {icon:'🧹',name:'Ranger sa chambre'},{icon:'🍎',name:'Manger des fruits'},
+      {icon:'📖',name:'Lire 15 min'},{icon:'💧',name:"Boire de l'eau"},
+      {icon:'😴',name:"Dormir à l'heure"},
     ],
-    kid1Name: 'Alex (10)', kid2Name: 'Sam (8)',
+    kid1Name:'Alex (10)', kid2Name:'Sam (8)',
   },
   ar: {
-    appTitle: 'متتبع المهام',
-    appSub: 'تتبع عادات أطفالك — محفوظ للأبد!',
-    login: 'دخول', signup: 'إنشاء حساب',
-    emailPlaceholder: 'بريدك الإلكتروني',
-    passwordPlaceholder: 'كلمة المرور (6 أحرف على الأقل)',
-    loginBtn: '🚀 تسجيل الدخول',
-    signupBtn: '🎉 إنشاء حساب جديد',
-    fillFields: 'يرجى ملء جميع الحقول',
-    logout: 'خروج',
-    tracker: 'المهام',
-    customize: 'تخصيص',
-    settingsHeader: '⚙️ تخصيص الأطفال',
-    addKid: '➕ إضافة طفل آخر',
-    saveCloud: '☁️ حفظ في السحابة',
-    savedCloud: '☁️ تم الحفظ!',
-    saveFailed: '⚠️ فشل الحفظ',
-    colorTheme: '🎨 اللون',
-    animalAvatar: '🐾 الحيوان',
-    dailyTasks: '✅ المهام اليومية',
-    addTask: '➕ إضافة مهمة',
-    removeKid: '🗑 حذف',
-    weekProgress: '📅 تقدم الأسبوع',
-    totalProgress: 'التقدم الكلي',
-    perfectWeek: '🏆 أسبوع مثالي! أنت بطل!',
-    amazing: '🥇 رائع جداً!',
-    great: '🥈 أحسنت!',
-    perfectDays: 'أيام مثالية!',
-    pickEmoji: 'اختر رمزاً',
-    close: 'إغلاق',
-    changeLang: '🌍 تغيير اللغة',
-    loading: 'جار التحميل...',
-    week: 'أسبوع',
-    days: ['إثن','ثلا','أرب','خمي','جمع','سبت','أحد'],
-    tasks: [
-      {icon:'⏰',name:'الاستيقاظ في الوقت'},
-      {icon:'🦷',name:'تنظيف الأسنان'},
-      {icon:'🛏',name:'ترتيب السرير'},
-      {icon:'📚',name:'أداء الواجبات'},
-      {icon:'🧹',name:'ترتيب الغرفة'},
-      {icon:'🍎',name:'أكل الفواكه'},
-      {icon:'📖',name:'القراءة 15 دقيقة'},
-      {icon:'💧',name:'شرب الماء'},
+    appTitle:'متتبع المهام', appSub:'تتبع عادات أطفالك — محفوظ للأبد!',
+    login:'دخول', signup:'إنشاء حساب',
+    emailPlaceholder:'بريدك الإلكتروني', passwordPlaceholder:'كلمة المرور (6 أحرف على الأقل)',
+    loginBtn:'🚀 تسجيل الدخول', signupBtn:'🎉 إنشاء حساب',
+    fillFields:'يرجى ملء جميع الحقول',
+    logout:'خروج', tracker:'المهام', customize:'تخصيص',
+    settingsHeader:'⚙️ تخصيص الأطفال', addKid:'➕ إضافة طفل آخر',
+    saveCloud:'☁️ حفظ', savedCloud:'☁️ تم الحفظ!', saveFailed:'⚠️ فشل الحفظ',
+    colorTheme:'🎨 اللون', animalAvatar:'🐾 الحيوان',
+    dailyTasks:'✅ المهام اليومية', addTask:'➕ إضافة مهمة', removeKid:'🗑 حذف',
+    weekProgress:'📅 التقدم', totalProgress:'التقدم الكلي',
+    perfectWeek:'🏆 أسبوع مثالي! أنت بطل!',
+    amazing:'🥇 رائع جداً!', great:'🥈 أحسنت!', perfectDays:'أيام مثالية!',
+    pickEmoji:'اختر رمزاً', close:'إغلاق', changeLang:'🌍 تغيير اللغة',
+    loading:'جار التحميل...', week:'أسبوع',
+    months:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+    monthsShort:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+    days:['إثن','ثلا','أرب','خمي','جمع','سبت','أحد'],
+    tasks:[
+      {icon:'⏰',name:'الاستيقاظ في الوقت'},{icon:'🦷',name:'تنظيف الأسنان'},
+      {icon:'🛏',name:'ترتيب السرير'},{icon:'📚',name:'أداء الواجبات'},
+      {icon:'🧹',name:'ترتيب الغرفة'},{icon:'🍎',name:'أكل الفواكه'},
+      {icon:'📖',name:'القراءة 15 دقيقة'},{icon:'💧',name:'شرب الماء'},
       {icon:'😴',name:'النوم في الوقت'},
     ],
-    kid1Name: 'أحمد (10)', kid2Name: 'سارة (8)',
+    kid1Name:'أحمد (10)', kid2Name:'سارة (8)',
   },
   de: {
-    appTitle: 'Missions-Tracker',
-    appSub: 'Der Gewohnheitstracker für Ihre Kinder — für immer gespeichert!',
-    login: 'Anmelden', signup: 'Registrieren',
-    emailPlaceholder: 'Ihre E-Mail-Adresse',
-    passwordPlaceholder: 'Passwort (min. 6 Zeichen)',
-    loginBtn: '🚀 Anmelden',
-    signupBtn: '🎉 Konto erstellen',
-    fillFields: 'Bitte alle Felder ausfüllen',
-    logout: 'Abmelden',
-    tracker: 'Tracker',
-    customize: 'Anpassen',
-    settingsHeader: '⚙️ Kinder anpassen',
-    addKid: '➕ Kind hinzufügen',
-    saveCloud: '☁️ In der Cloud speichern',
-    savedCloud: '☁️ In der Cloud gespeichert!',
-    saveFailed: '⚠️ Speichern fehlgeschlagen',
-    colorTheme: '🎨 Farbe',
-    animalAvatar: '🐾 Tier',
-    dailyTasks: '✅ Tägliche Aufgaben',
-    addTask: '➕ Aufgabe hinzufügen',
-    removeKid: '🗑 Entfernen',
-    weekProgress: '📅 Wochenfortschritt',
-    totalProgress: 'Gesamtfortschritt',
-    perfectWeek: '🏆 PERFEKTE WOCHE! Du bist ein CHAMPION!',
-    amazing: '🥇 Fantastisch!',
-    great: '🥈 Toll gemacht!',
-    perfectDays: 'perfekte Tage!',
-    pickEmoji: 'Emoji wählen',
-    close: 'Schließen',
-    changeLang: '🌍 Sprache ändern',
-    loading: 'Laden...',
-    week: 'Woche',
-    days: ['Mo','Di','Mi','Do','Fr','Sa','So'],
-    tasks: [
-      {icon:'⏰',name:'Pünktlich aufstehen'},
-      {icon:'🦷',name:'Zähne putzen'},
-      {icon:'🛏',name:'Bett machen'},
-      {icon:'📚',name:'Hausaufgaben'},
-      {icon:'🧹',name:'Zimmer aufräumen'},
-      {icon:'🍎',name:'Obst essen'},
-      {icon:'📖',name:'15 Min lesen'},
-      {icon:'💧',name:'Wasser trinken'},
+    appTitle:'Missions-Tracker', appSub:'Der Gewohnheitstracker für Ihre Kinder!',
+    login:'Anmelden', signup:'Registrieren',
+    emailPlaceholder:'Ihre E-Mail-Adresse', passwordPlaceholder:'Passwort (min. 6 Zeichen)',
+    loginBtn:'🚀 Anmelden', signupBtn:'🎉 Konto erstellen',
+    fillFields:'Bitte alle Felder ausfüllen',
+    logout:'Abmelden', tracker:'Tracker', customize:'Anpassen',
+    settingsHeader:'⚙️ Kinder anpassen', addKid:'➕ Kind hinzufügen',
+    saveCloud:'☁️ Speichern', savedCloud:'☁️ Gespeichert!', saveFailed:'⚠️ Fehler',
+    colorTheme:'🎨 Farbe', animalAvatar:'🐾 Tier',
+    dailyTasks:'✅ Tägliche Aufgaben', addTask:'➕ Aufgabe hinzufügen', removeKid:'🗑 Entfernen',
+    weekProgress:'📅 Fortschritt', totalProgress:'Gesamtfortschritt',
+    perfectWeek:'🏆 PERFEKTE WOCHE! Du bist ein CHAMPION!',
+    amazing:'🥇 Fantastisch!', great:'🥈 Toll gemacht!', perfectDays:'perfekte Tage!',
+    pickEmoji:'Emoji wählen', close:'Schließen', changeLang:'🌍 Sprache ändern',
+    loading:'Laden...', week:'Woche',
+    months:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    monthsShort:['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+    days:['Mo','Di','Mi','Do','Fr','Sa','So'],
+    tasks:[
+      {icon:'⏰',name:'Pünktlich aufstehen'},{icon:'🦷',name:'Zähne putzen'},
+      {icon:'🛏',name:'Bett machen'},{icon:'📚',name:'Hausaufgaben'},
+      {icon:'🧹',name:'Zimmer aufräumen'},{icon:'🍎',name:'Obst essen'},
+      {icon:'📖',name:'15 Min lesen'},{icon:'💧',name:'Wasser trinken'},
       {icon:'😴',name:'Pünktlich schlafen'},
     ],
-    kid1Name: 'Alex (10)', kid2Name: 'Sam (8)',
+    kid1Name:'Alex (10)', kid2Name:'Sam (8)',
   },
 };
 
-const ANIMALS = ['🦁','🐯','🦊','🐼','🐨','🐸','🦅','🐬','🐧','🐙','🦄','🐶','🐱','🐻','🐺','🦋','🐝','🦖','🦕','🐲'];
-const PALETTE = [
+const ANIMALS=['🦁','🐯','🦊','🐼','🐨','🐸','🦅','🐬','🐧','🐙','🦄','🐶','🐱','🐻','🐺','🦋','🐝','🦖','🦕','🐲'];
+const PALETTE=[
   {main:'#FF6B6B',light:'#FFE5E5',dark:'#C0392B',grad:'#FF6B6B,#FF8E53'},
   {main:'#4ECDC4',light:'#E0F7F6',dark:'#1A9B93',grad:'#4ECDC4,#45B7D1'},
   {main:'#9B59B6',light:'#F3E5F5',dark:'#6C3483',grad:'#9B59B6,#C39BD3'},
@@ -551,87 +492,134 @@ const PALETTE = [
   {main:'#FF6B9D',light:'#FFE5F0',dark:'#B03060',grad:'#FF6B9D,#FFC0CB'},
   {main:'#F1C40F',light:'#FEF9E7',dark:'#9A7D0A',grad:'#F1C40F,#FFEAA7'},
 ];
-const ALL_EMOJIS = ['⭐','📚','🏃','🧹','🍎','🎨','🎵','💪','🧼','🛏','🥗','🎮','📖','🌿','🧘','✏️','🐶','🎯','💧','🦷','⏰','🎒','😴','🚿','🧺','🏊','🚴','🍳','🧩','🌟','🏆','🎁','🌈','🦋','🐝','🌸','🍕','🥤','🧁','🎭','🎬','🎤','🏋️','🤸','⚽','🏀','🎾','🧲','🔬','🌍','🚀','✈️','🦄','🐯','🦊','🐼','🐨','🐸','🐬','🦁','🐧','🐙'];
-const WEEKS = 5;
+const ALL_EMOJIS=['⭐','📚','🏃','🧹','🍎','🎨','🎵','💪','🧼','🛏','🥗','🎮','📖','🌿','🧘','✏️','🐶','🎯','💧','🦷','⏰','🎒','😴','🚿','🧺','🏊','🚴','🍳','🧩','🌟','🏆','🎁','🌈','🦋','🐝','🌸','🍕','🥤','🧁','🎭','🎬','🎤','🏋️','🤸','⚽','🏀','🎾','🧲','🔬','🌍','🚀','✈️','🦄','🐯','🦊','🐼','🐨','🐸','🐬','🦁','🐧','🐙'];
 
-let currentLang = 'en';
-let state = {kids:[],checks:{},currentKid:0,currentWeek:{}};
-let openDays = {};
-let emojiCallback = null;
-let authMode = 'login';
+let currentLang='en';
+let state={kids:[],checks:{},currentKid:0,currentMonth:{month:new Date().getMonth(),year:new Date().getFullYear()},currentWeek:{}};
+let openDays={};
+let emojiCallback=null;
+let authMode='login';
+let showMonthGrid=false;
+let tempYear=new Date().getFullYear();
 
-function t(key) { return T[currentLang][key] || T['en'][key]; }
+function tr(key){return T[currentLang][key]||T['en'][key];}
 
-function defaultKids() {
-  const lang = T[currentLang];
+function defaultKids(){
+  const lang=T[currentLang];
   return [
     {id:'k0',name:lang.kid1Name,animal:'🦁',colorIdx:0,tasks:JSON.parse(JSON.stringify(lang.tasks))},
     {id:'k1',name:lang.kid2Name,animal:'🐬',colorIdx:1,tasks:JSON.parse(JSON.stringify(lang.tasks))},
   ];
 }
 
+// ── DATE HELPERS ──
+// Get all weeks of a month as arrays of 7 dates (Mon-Sun)
+function getWeeksOfMonth(year, month) {
+  const weeks = [];
+  // Find first Monday on or before the 1st of month
+  const firstDay = new Date(year, month, 1);
+  // Day of week: 0=Sun,1=Mon...6=Sat → convert to Mon=0
+  const firstDayOfWeek = (firstDay.getDay() + 6) % 7;
+  const startDate = new Date(firstDay);
+  startDate.setDate(1 - firstDayOfWeek);
+
+  for (let w = 0; w < 6; w++) {
+    const week = [];
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + w * 7 + d);
+      week.push(date);
+    }
+    // Only include week if it overlaps with the month
+    const hasMonthDay = week.some(d => d.getMonth() === month);
+    if (hasMonthDay) weeks.push(week);
+  }
+  return weeks;
+}
+
+function dateKey(date) {
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+}
+
+function monthKey(year, month) {
+  return `${year}-${month}`;
+}
+
 function fixState() {
   state.kids.forEach(kid => {
-    if(!state.checks[kid.id]) state.checks[kid.id]={};
-    if(!state.currentWeek[kid.id]) state.currentWeek[kid.id]=1;
-    for(let w=1;w<=WEEKS;w++){
-      if(!state.checks[kid.id][w]) state.checks[kid.id][w]={};
-      for(let d=0;d<7;d++){
-        const need=kid.tasks.length;
-        if(!state.checks[kid.id][w][d]) state.checks[kid.id][w][d]=new Array(need).fill(false);
-        while(state.checks[kid.id][w][d].length<need) state.checks[kid.id][w][d].push(false);
-      }
-    }
+    if (!state.checks[kid.id]) state.checks[kid.id] = {};
+    if (!state.currentWeek[kid.id]) state.currentWeek[kid.id] = 0;
   });
-  if(!state.kids[state.currentKid]) state.currentKid=0;
+  if (!state.kids[state.currentKid]) state.currentKid = 0;
+}
+
+// ── SAVE ──
+async function saveToCloud() {
+  if (!window.currentUser) return;
+  try {
+    const ref = window._doc(window._db, 'users', window.currentUser.uid);
+    await window._setDoc(ref, {kids:state.kids,checks:state.checks,currentMonth:state.currentMonth,currentWeek:state.currentWeek,lang:currentLang});
+    showToast(tr('savedCloud'));
+  } catch(e) { showToast(tr('saveFailed')); }
+}
+window.saveToCloud = saveToCloud;
+
+async function quickSave() {
+  if (!window.currentUser) return;
+  try {
+    const ref = window._doc(window._db, 'users', window.currentUser.uid);
+    await window._setDoc(ref, {kids:state.kids,checks:state.checks,currentMonth:state.currentMonth,currentWeek:state.currentWeek,lang:currentLang});
+  } catch(e) { console.error(e); }
+}
+
+function showToast(msg) {
+  const el = document.getElementById('save-toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
 }
 
 // ── LANG ──
 function setLang(lang) {
   currentLang = lang;
   localStorage.setItem('mtracker-lang', lang);
-  applyBodyLang();
-  showAuth();
+  applyBodyLang(); showAuth();
 }
 window.setLang = setLang;
 
 function applyBodyLang() {
-  document.body.className = 'lang-'+currentLang;
-  if(currentLang==='ar') document.documentElement.setAttribute('dir','rtl');
-  else document.documentElement.setAttribute('dir','ltr');
+  document.body.className = 'lang-' + currentLang;
+  document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
 }
 
 function applyLangToApp() {
   applyBodyLang();
-  document.getElementById('loading-text').textContent = t('loading');
-  document.getElementById('logout-btn').textContent = t('logout');
-  document.getElementById('nav-tracker-label').textContent = t('tracker');
-  document.getElementById('nav-settings-label').textContent = t('customize');
-  document.getElementById('settings-header-text').textContent = t('settingsHeader');
-  document.getElementById('add-kid-btn').textContent = t('addKid');
-  document.getElementById('save-cloud-btn').textContent = t('saveCloud');
-  document.getElementById('emoji-modal-title').textContent = t('pickEmoji');
-  document.getElementById('emoji-close-btn').textContent = t('close');
+  document.getElementById('logout-btn').textContent = tr('logout');
+  document.getElementById('nav-tracker-label').textContent = tr('tracker');
+  document.getElementById('nav-settings-label').textContent = tr('customize');
+  document.getElementById('settings-header-text').textContent = tr('settingsHeader');
+  document.getElementById('add-kid-btn').textContent = tr('addKid');
+  document.getElementById('save-cloud-btn').textContent = tr('saveCloud');
+  document.getElementById('emoji-modal-title').textContent = tr('pickEmoji');
+  document.getElementById('emoji-close-btn').textContent = tr('close');
 }
 
 function showAuth() {
-  document.getElementById('lang-screen').style.display='none';
-  document.getElementById('auth-screen').style.display='flex';
+  document.getElementById('lang-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
   applyBodyLang();
-  // Update auth text
-  document.getElementById('auth-title').textContent = t('appTitle');
-  document.getElementById('auth-sub').textContent = t('appSub');
-  document.getElementById('tab-login').textContent = t('login');
-  document.getElementById('tab-signup').textContent = t('signup');
-  document.getElementById('auth-email').placeholder = t('emailPlaceholder');
-  document.getElementById('auth-password').placeholder = t('passwordPlaceholder');
-  document.getElementById('auth-submit-btn').textContent = t('loginBtn');
-  document.querySelector('.back-lang-btn').textContent = t('changeLang');
+  document.getElementById('auth-title').textContent = tr('appTitle');
+  document.getElementById('auth-sub').textContent = tr('appSub');
+  document.getElementById('tab-login').textContent = tr('login');
+  document.getElementById('tab-signup').textContent = tr('signup');
+  document.getElementById('auth-email').placeholder = tr('emailPlaceholder');
+  document.getElementById('auth-password').placeholder = tr('passwordPlaceholder');
+  document.getElementById('auth-submit-btn').textContent = tr('loginBtn');
+  document.querySelector('.back-lang-btn').textContent = tr('changeLang');
 }
 
 function goBackToLang() {
-  document.getElementById('auth-screen').style.display='none';
-  document.getElementById('lang-screen').style.display='flex';
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('lang-screen').style.display = 'flex';
 }
 window.goBackToLang = goBackToLang;
 
@@ -640,26 +628,26 @@ function switchAuthTab(mode) {
   authMode = mode;
   document.getElementById('tab-login').classList.toggle('active', mode==='login');
   document.getElementById('tab-signup').classList.toggle('active', mode==='signup');
-  document.getElementById('auth-submit-btn').textContent = mode==='login'?t('loginBtn'):t('signupBtn');
-  document.getElementById('auth-error').textContent='';
+  document.getElementById('auth-submit-btn').textContent = mode==='login'?tr('loginBtn'):tr('signupBtn');
+  document.getElementById('auth-error').textContent = '';
 }
 window.switchAuthTab = switchAuthTab;
 
 async function handleAuth() {
-  const email=document.getElementById('auth-email').value.trim();
-  const password=document.getElementById('auth-password').value;
-  const errEl=document.getElementById('auth-error');
-  const btn=document.getElementById('auth-submit-btn');
-  if(!email||!password){errEl.textContent=t('fillFields');return;}
-  btn.disabled=true;btn.textContent='...';
+  const email = document.getElementById('auth-email').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const errEl = document.getElementById('auth-error');
+  const btn = document.getElementById('auth-submit-btn');
+  if (!email||!password) { errEl.textContent=tr('fillFields'); return; }
+  btn.disabled=true; btn.textContent='...';
   try {
-    if(authMode==='signup') await window._createUser(window._auth,email,password);
+    if (authMode==='signup') await window._createUser(window._auth,email,password);
     else await window._signIn(window._auth,email,password);
     errEl.textContent='';
   } catch(e) {
     errEl.textContent=e.message.replace('Firebase: ','').replace(/\(.*\)/,'');
     btn.disabled=false;
-    btn.textContent=authMode==='login'?t('loginBtn'):t('signupBtn');
+    btn.textContent=authMode==='login'?tr('loginBtn'):tr('signupBtn');
   }
 }
 window.handleAuth = handleAuth;
@@ -670,163 +658,249 @@ async function handleLogout() {
 }
 window.handleLogout = handleLogout;
 
-// ── CLOUD ──
-async function saveToCloud() {
-  if(!window.currentUser)return;
-  try {
-    const ref=window._doc(window._db,'users',window.currentUser.uid);
-    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek,lang:currentLang});
-    showToast(t('savedCloud'));
-  } catch(e){showToast(t('saveFailed'));}
-}
-window.saveToCloud = saveToCloud;
-
-async function quickSave() {
-  if(!window.currentUser)return;
-  try {
-    const ref=window._doc(window._db,'users',window.currentUser.uid);
-    await window._setDoc(ref,{kids:state.kids,checks:state.checks,currentWeek:state.currentWeek,lang:currentLang});
-  } catch(e){console.error(e);}
-}
-
-function showToast(msg) {
-  const t=document.getElementById('save-toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
-}
-
 // ── PAGE NAV ──
 function showPage(p) {
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   document.getElementById('nav-'+p).classList.add('active');
-  if(p==='settings') renderSettings();
-  if(p==='tracker') renderTracker();
+  if (p==='settings') renderSettings();
+  if (p==='tracker') renderTracker();
 }
 window.showPage = showPage;
 
 // ── TRACKER ──
-function renderTracker(){renderKidTabs();renderTrackerCard();renderWeekSummary();}
+function renderTracker() { renderKidTabs(); renderTrackerCard(); renderWeekSummary(); }
 
 function renderKidTabs() {
-  const wrap=document.getElementById('kids-tabs');
-  wrap.innerHTML='';
-  state.kids.forEach((kid,i)=>{
-    const col=PALETTE[kid.colorIdx||0];
-    const btn=document.createElement('button');
-    btn.className='kid-tab'+(i===state.currentKid?' active':'');
-    btn.style.background=i===state.currentKid?col.main:'#f0f0f0';
-    btn.innerHTML=`<span>${kid.animal}</span><span>${kid.name}</span>`;
-    btn.onclick=()=>{state.currentKid=i;renderTracker();};
+  const wrap = document.getElementById('kids-tabs');
+  wrap.innerHTML = '';
+  state.kids.forEach((kid,i) => {
+    const col = PALETTE[kid.colorIdx||0];
+    const btn = document.createElement('button');
+    btn.className = 'kid-tab'+(i===state.currentKid?' active':'');
+    btn.style.background = i===state.currentKid?col.main:'#f0f0f0';
+    btn.innerHTML = `<span>${kid.animal}</span><span>${kid.name}</span>`;
+    btn.onclick = () => { state.currentKid=i; renderTracker(); };
     wrap.appendChild(btn);
   });
-  const add=document.createElement('button');
-  add.className='add-kid-tab';add.textContent='➕';
-  add.onclick=()=>{addKid();showPage('settings');};
+  const add = document.createElement('button');
+  add.className = 'add-kid-tab'; add.textContent = '➕';
+  add.onclick = () => { addKid(); showPage('settings'); };
   wrap.appendChild(add);
 }
 
 function renderTrackerCard() {
-  const kid=state.kids[state.currentKid];
-  if(!kid)return;
-  const col=PALETTE[kid.colorIdx||0];
-  const w=state.currentWeek[kid.id]||1;
-  const days=t('days');
-  const wrap=document.getElementById('tracker-card-wrap');
-  wrap.innerHTML='';
-  const card=document.createElement('div');
-  card.className='tracker-card';
-  card.style.background=`linear-gradient(160deg,${col.light} 0%,#fff 60%)`;
-  card.style.borderTop=`4px solid ${col.main}`;
+  const kid = state.kids[state.currentKid];
+  if (!kid) return;
+  const col = PALETTE[kid.colorIdx||0];
+  const {month, year} = state.currentMonth;
+  const weeks = getWeeksOfMonth(year, month);
+  const currentWeekIdx = state.currentWeek[kid.id] || 0;
+  const days = tr('days');
+  const months = tr('months');
 
-  const wb=document.createElement('div');wb.className='week-bar';
-  for(let wk=1;wk<=WEEKS;wk++){
-    const b=document.createElement('button');
-    b.className='week-btn';
-    b.style.background=w===wk?col.main:'#f0f0f0';
-    b.style.color=w===wk?'#fff':'#999';
-    b.textContent=t('week')+' '+wk;
-    b.onclick=()=>{state.currentWeek[kid.id]=wk;renderTracker();quickSave();};
-    wb.appendChild(b);
-  }
+  const wrap = document.getElementById('tracker-card-wrap');
+  wrap.innerHTML = '';
+  const card = document.createElement('div');
+  card.className = 'tracker-card';
+  card.style.background = `linear-gradient(160deg,${col.light} 0%,#fff 60%)`;
+  card.style.borderTop = `4px solid ${col.main}`;
+
+  // ── MONTH SELECTOR ──
+  const ms = document.createElement('div');
+  ms.className = 'month-selector';
+  ms.style.borderLeft = `4px solid ${col.main}`;
+  ms.innerHTML = `
+    <button class="month-nav-btn" onclick="changeMonth(-1)">◀</button>
+    <div class="month-year-display" onclick="toggleMonthGrid()" style="cursor:pointer;">
+      <span class="month-name" style="color:${col.dark}">${months[month]}</span>
+      <span class="year-name">${year} ▼</span>
+    </div>
+    <button class="month-nav-btn" onclick="changeMonth(1)">▶</button>
+  `;
+  card.appendChild(ms);
+
+  // ── MONTH GRID ──
+  const mg = document.createElement('div');
+  mg.className = 'month-grid-wrap'+(showMonthGrid?' open':'');
+  mg.id = 'month-grid-wrap';
+  tempYear = year;
+
+  const ys = document.createElement('div');
+  ys.className = 'year-selector';
+  ys.innerHTML = `
+    <button class="year-btn" onclick="changeYear(-1)">◀</button>
+    <span class="year-display" id="temp-year-display">${tempYear}</span>
+    <button class="year-btn" onclick="changeYear(1)">▶</button>
+  `;
+  mg.appendChild(ys);
+
+  const grid = document.createElement('div');
+  grid.className = 'month-grid';
+  const monthsShort = tr('monthsShort');
+  monthsShort.forEach((mn, mi) => {
+    const chip = document.createElement('button');
+    chip.className = 'month-chip'+(mi===month&&tempYear===year?' sel':'');
+    if (mi===month&&tempYear===year) { chip.style.background=col.main; chip.style.color='#fff'; }
+    chip.textContent = mn;
+    chip.onclick = () => {
+      state.currentMonth = {month:mi, year:tempYear};
+      state.currentWeek[kid.id] = 0;
+      showMonthGrid = false;
+      renderTracker(); quickSave();
+    };
+    grid.appendChild(chip);
+  });
+  mg.appendChild(grid);
+  card.appendChild(mg);
+
+  // ── WEEK BAR ──
+  const wb = document.createElement('div');
+  wb.className = 'week-bar';
+  weeks.forEach((week, wi) => {
+    const startDay = week[0];
+    const endDay = week[6];
+    const startInMonth = week.find(d => d.getMonth()===month);
+    const endInMonth = [...week].reverse().find(d => d.getMonth()===month);
+    const btn = document.createElement('button');
+    btn.className = 'week-btn';
+    btn.style.background = wi===currentWeekIdx?col.main:'#f0f0f0';
+    btn.style.color = wi===currentWeekIdx?'#fff':'#999';
+    btn.innerHTML = `${tr('week')} ${wi+1}<span class="week-dates">${startInMonth.getDate()} – ${endInMonth.getDate()}</span>`;
+    btn.onclick = () => {
+      state.currentWeek[kid.id] = wi;
+      renderTracker(); quickSave();
+    };
+    wb.appendChild(btn);
+  });
   card.appendChild(wb);
 
-  days.forEach((day,d)=>{
-    const checks=state.checks[kid.id][w][d];
-    const done=checks.filter(Boolean).length;
-    const total=kid.tasks.length;
-    const key=kid.id+'_'+w+'_'+d;
-    const todayIdx=(new Date().getDay()+6)%7;
-    const isOpen=openDays[key]!==undefined?openDays[key]:d===todayIdx;
-    const block=document.createElement('div');
-    block.className='day-block'+(isOpen?' open':'');
-    const header=document.createElement('div');
-    header.className='day-header';
-    header.innerHTML=`
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span class="day-badge" style="background:${col.main}">${day}</span>
+  // ── DAYS ──
+  const currentWeek = weeks[currentWeekIdx] || weeks[0];
+  currentWeek.forEach((date, d) => {
+    const isInMonth = date.getMonth() === month;
+    const dk = dateKey(date);
+    const mk = monthKey(year, month);
+    if (!state.checks[kid.id][mk]) state.checks[kid.id][mk] = {};
+    if (!state.checks[kid.id][mk][dk]) state.checks[kid.id][mk][dk] = new Array(kid.tasks.length).fill(false);
+    while (state.checks[kid.id][mk][dk].length < kid.tasks.length) state.checks[kid.id][mk][dk].push(false);
+
+    const checks = state.checks[kid.id][mk][dk];
+    const done = checks.filter(Boolean).length;
+    const total = kid.tasks.length;
+
+    const today = new Date();
+    const isToday = date.toDateString() === today.toDateString();
+    const openKey = dk+'_'+kid.id;
+    const isOpen = openDays[openKey] !== undefined ? openDays[openKey] : isToday;
+
+    const block = document.createElement('div');
+    block.className = 'day-block'+(isOpen?' open':'');
+    if (!isInMonth) block.style.opacity = '0.45';
+
+    const header = document.createElement('div');
+    header.className = 'day-header';
+    header.style.background = isToday ? col.light : '#fff';
+    header.innerHTML = `
+      <div class="day-left">
+        <span class="day-badge" style="background:${isInMonth?col.main:'#ccc'}">${days[d]}</span>
+        <span class="day-date-num" style="color:${isToday?col.dark:'#aaa'}">${date.getDate()}</span>
         <span class="day-score">${done}/${total} ${done===total&&total>0?'⭐':''}</span>
       </div>
       <span class="day-arrow">▼</span>`;
-    header.onclick=()=>{openDays[key]=!block.classList.contains('open');block.classList.toggle('open');};
+    header.onclick = () => {
+      openDays[openKey] = !block.classList.contains('open');
+      block.classList.toggle('open');
+    };
     block.appendChild(header);
-    const td=document.createElement('div');td.className='day-tasks';
-    kid.tasks.forEach((task,t2)=>{
-      const isDone=checks[t2];
-      const row=document.createElement('div');
-      row.className='task-row'+(isDone?' done':'');
-      row.innerHTML=`
+
+    const td = document.createElement('div');
+    td.className = 'day-tasks';
+    kid.tasks.forEach((task, t) => {
+      const isDone = checks[t];
+      const row = document.createElement('div');
+      row.className = 'task-row'+(isDone?' done':'');
+      row.innerHTML = `
         <span class="t-icon">${task.icon}</span>
         <span class="t-name">${task.name}</span>
         <div class="check-box ${isDone?'on':''}" style="${isDone?`background:${col.main};border-color:${col.main}`:''}">
           ${isDone?'✓':''}
         </div>`;
-      row.onclick=()=>toggleTask(d,t2);
+      row.onclick = () => toggleTask(date, t);
       td.appendChild(row);
     });
     block.appendChild(td);
     card.appendChild(block);
   });
+
   wrap.appendChild(card);
 }
 
 function renderWeekSummary() {
-  const kid=state.kids[state.currentKid];
-  if(!kid)return;
-  const col=PALETTE[kid.colorIdx||0];
-  const w=state.currentWeek[kid.id]||1;
-  const days=t('days');
-  const wrap=document.getElementById('week-summary-wrap');
-  wrap.innerHTML='';
-  const box=document.createElement('div');box.className='week-summary';
-  let totalDone=0,totalMax=0;
-  const fullDays=[];
-  const chips=document.createElement('div');chips.className='day-chips';
-  days.forEach((day,d)=>{
-    const checks=state.checks[kid.id][w][d];
-    const done=checks.filter(Boolean).length;
-    const total=kid.tasks.length;
-    totalDone+=done;totalMax+=total;
-    const full=done===total&&total>0;
+  const kid = state.kids[state.currentKid];
+  if (!kid) return;
+  const col = PALETTE[kid.colorIdx||0];
+  const {month, year} = state.currentMonth;
+  const weeks = getWeeksOfMonth(year, month);
+  const currentWeekIdx = state.currentWeek[kid.id] || 0;
+  const currentWeek = weeks[currentWeekIdx] || weeks[0];
+  const days = tr('days');
+  const mk = monthKey(year, month);
+
+  const wrap = document.getElementById('week-summary-wrap');
+  wrap.innerHTML = '';
+  const box = document.createElement('div');
+  box.className = 'week-summary';
+
+  let totalDone=0, totalMax=0;
+  const fullDays = [];
+  const chips = document.createElement('div');
+  chips.className = 'day-chips';
+
+  currentWeek.forEach((date, d) => {
+    const isInMonth = date.getMonth() === month;
+    const dk = dateKey(date);
+    if (!state.checks[kid.id][mk]) state.checks[kid.id][mk] = {};
+    if (!state.checks[kid.id][mk][dk]) state.checks[kid.id][mk][dk] = new Array(kid.tasks.length).fill(false);
+    const checks = state.checks[kid.id][mk][dk];
+    const done = checks.filter(Boolean).length;
+    const total = kid.tasks.length;
+    if (isInMonth) { totalDone+=done; totalMax+=total; }
+    const full = done===total&&total>0&&isInMonth;
     fullDays.push(full);
-    const chip=document.createElement('div');
-    chip.className='d-chip';
-    chip.style.background=full?col.light:'#f5f5f5';
-    chip.innerHTML=`<span class="cs" style="color:${full?col.dark:'#aaa'}">${full?'⭐':done}</span><span class="cl">${day}</span>`;
+
+    const chip = document.createElement('div');
+    chip.className = 'd-chip';
+    chip.style.background = full?col.light:isInMonth?'#f5f5f5':'#f9f9f9';
+    chip.style.opacity = isInMonth?'1':'0.5';
+    chip.innerHTML = `
+      <span class="cs" style="color:${full?col.dark:'#aaa'}">${full?'⭐':isInMonth?done:'-'}</span>
+      <span class="cl">${days[d]}</span>
+      <span class="cd">${date.getDate()}</span>`;
     chips.appendChild(chip);
   });
-  const pct=totalMax>0?Math.round((totalDone/totalMax)*100):0;
-  const earned=fullDays.filter(Boolean).length;
-  box.innerHTML=`<div class="sum-title">${t('weekProgress')} ${w}</div>`;
+
+  const pct = totalMax>0?Math.round((totalDone/totalMax)*100):0;
+  const earned = fullDays.filter(Boolean).length;
+  const months = tr('months');
+  const wkStart = currentWeek.find(d=>d.getMonth()===month);
+  const wkEnd = [...currentWeek].reverse().find(d=>d.getMonth()===month);
+
+  box.innerHTML = `
+    <div class="sum-title">
+      ${tr('weekProgress')} ${currentWeekIdx+1}
+      <span class="sum-dates">${months[month]} ${wkStart?wkStart.getDate():''} – ${wkEnd?wkEnd.getDate():''}</span>
+    </div>`;
   box.appendChild(chips);
-  box.innerHTML+=`
-    <div class="prog-label"><span>${t('totalProgress')}</span><span>${totalDone}/${totalMax} (${pct}%)</span></div>
+  box.innerHTML += `
+    <div class="prog-label"><span>${tr('totalProgress')}</span><span>${totalDone}/${totalMax} (${pct}%)</span></div>
     <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:linear-gradient(90deg,${col.grad})"></div></div>
     <div class="stars-row">${Array.from({length:7},(_,i)=>`<span class="s-icon ${fullDays[i]?'':'s-empty'}">⭐</span>`).join('')}</div>`;
-  if(earned>=3){
-    const msg=earned===7?t('perfectWeek'):earned>=5?`${t('amazing')} ${earned}/7 ${t('perfectDays')}`:`${t('great')} ${earned}/7 ${t('perfectDays')}`;
-    const ach=document.createElement('div');
+
+  if (earned>=3) {
+    const msg = earned===7?tr('perfectWeek'):earned>=5?`${tr('amazing')} ${earned}/7 ${tr('perfectDays')}`:`${tr('great')} ${earned}/7 ${tr('perfectDays')}`;
+    const ach = document.createElement('div');
     ach.className='achieve show';
     ach.style.cssText=`background:${col.light};color:${col.dark};border-color:${col.main}`;
     ach.textContent=msg;
@@ -835,25 +909,56 @@ function renderWeekSummary() {
   wrap.appendChild(box);
 }
 
-async function toggleTask(d,t2) {
-  const kid=state.kids[state.currentKid];
-  const w=state.currentWeek[kid.id]||1;
-  const val=!state.checks[kid.id][w][d][t2];
-  state.checks[kid.id][w][d][t2]=val;
-  if(val) spawnConfetti(kid.colorIdx||0);
-  renderTrackerCard();renderWeekSummary();
+function changeMonth(dir) {
+  let {month, year} = state.currentMonth;
+  month += dir;
+  if (month > 11) { month=0; year++; }
+  if (month < 0) { month=11; year--; }
+  state.currentMonth = {month, year};
+  const kid = state.kids[state.currentKid];
+  if (kid) state.currentWeek[kid.id] = 0;
+  showMonthGrid = false;
+  renderTracker(); quickSave();
+}
+window.changeMonth = changeMonth;
+
+function toggleMonthGrid() {
+  showMonthGrid = !showMonthGrid;
+  const el = document.getElementById('month-grid-wrap');
+  if (el) el.classList.toggle('open', showMonthGrid);
+}
+window.toggleMonthGrid = toggleMonthGrid;
+
+function changeYear(dir) {
+  tempYear += dir;
+  const el = document.getElementById('temp-year-display');
+  if (el) el.textContent = tempYear;
+}
+window.changeYear = changeYear;
+
+async function toggleTask(date, t) {
+  const kid = state.kids[state.currentKid];
+  const {month, year} = state.currentMonth;
+  const mk = monthKey(year, month);
+  const dk = dateKey(date);
+  if (!state.checks[kid.id][mk]) state.checks[kid.id][mk] = {};
+  if (!state.checks[kid.id][mk][dk]) state.checks[kid.id][mk][dk] = new Array(kid.tasks.length).fill(false);
+  const val = !state.checks[kid.id][mk][dk][t];
+  state.checks[kid.id][mk][dk][t] = val;
+  if (val) spawnConfetti(kid.colorIdx||0);
+  renderTrackerCard(); renderWeekSummary();
   await quickSave();
 }
 
 // ── SETTINGS ──
 function renderSettings() {
-  const list=document.getElementById('settings-kids-list');
-  list.innerHTML='';
-  state.kids.forEach((kid,i)=>{
-    const col=PALETTE[kid.colorIdx||0];
-    const card=document.createElement('div');
-    card.className='kid-card-settings';
-    card.innerHTML=`
+  const list = document.getElementById('settings-kids-list');
+  list.innerHTML = '';
+  state.kids.forEach((kid,i) => {
+    const col = PALETTE[kid.colorIdx||0];
+    const card = document.createElement('div');
+    card.className = 'kid-card-settings';
+    card.innerHTML = `
       <div class="kcs-top">
         <div class="kid-avatar-big" style="background:${col.light}">${kid.animal}</div>
         <div style="flex:1">
@@ -861,80 +966,82 @@ function renderSettings() {
             onchange="state.kids[${i}].name=this.value" style="border-color:${col.main}40">
         </div>
       </div>
-      <div class="section-label">${t('colorTheme')}</div>
+      <div class="section-label">${tr('colorTheme')}</div>
       <div class="color-picker" id="cp-${i}"></div>
-      <div class="section-label">${t('animalAvatar')}</div>
+      <div class="section-label">${tr('animalAvatar')}</div>
       <div class="animal-picker" id="ap-${i}"></div>
-      <div class="section-label">${t('dailyTasks')}</div>
+      <div class="section-label">${tr('dailyTasks')}</div>
       <div class="tasks-editor" id="te-${i}"></div>
-      <button class="add-task-btn" onclick="addTask(${i})">${t('addTask')}</button>
-      ${state.kids.length>1?`<button class="del-kid-btn" onclick="deleteKid(${i})">${t('removeKid')} ${kid.name}</button>`:''}
+      <button class="add-task-btn" onclick="addTask(${i})">${tr('addTask')}</button>
+      ${state.kids.length>1?`<button class="del-kid-btn" onclick="deleteKid(${i})">${tr('removeKid')} ${kid.name}</button>`:''}
     `;
     list.appendChild(card);
-    const cp=card.querySelector('#cp-'+i);
-    PALETTE.forEach((p,ci)=>{
-      const dot=document.createElement('div');
+
+    const cp = card.querySelector('#cp-'+i);
+    PALETTE.forEach((p,ci) => {
+      const dot = document.createElement('div');
       dot.className='color-dot'+(kid.colorIdx===ci?' sel':'');
       dot.style.background=p.main;
       dot.onclick=()=>{state.kids[i].colorIdx=ci;renderSettings();};
       cp.appendChild(dot);
     });
-    const ap=card.querySelector('#ap-'+i);
-    ANIMALS.forEach(a=>{
-      const btn=document.createElement('button');
+
+    const ap = card.querySelector('#ap-'+i);
+    ANIMALS.forEach(a => {
+      const btn = document.createElement('button');
       btn.className='animal-btn'+(kid.animal===a?' sel':'');
       btn.textContent=a;
       btn.onclick=()=>{state.kids[i].animal=a;renderSettings();};
       ap.appendChild(btn);
     });
-    const te=card.querySelector('#te-'+i);
-    kid.tasks.forEach((task,t2)=>{
-      const row=document.createElement('div');
+
+    const te = card.querySelector('#te-'+i);
+    kid.tasks.forEach((task,t) => {
+      const row = document.createElement('div');
       row.className='task-edit-row';
       row.innerHTML=`
-        <div class="task-icon-pick" onclick="openEmojiModal(${i},${t2})">${task.icon}</div>
+        <div class="task-icon-pick" onclick="openEmojiModal(${i},${t})">${task.icon}</div>
         <input class="task-name-inp" value="${task.name}" placeholder="Task"
-          onchange="state.kids[${i}].tasks[${t2}].name=this.value">
-        <button class="del-task-btn" onclick="deleteTask(${i},${t2})">✕</button>`;
+          onchange="state.kids[${i}].tasks[${t}].name=this.value">
+        <button class="del-task-btn" onclick="deleteTask(${i},${t})">✕</button>`;
       te.appendChild(row);
     });
   });
 }
 
-function addKid(){
+function addKid() {
   const id='k'+Date.now();
   const used=state.kids.map(k=>k.colorIdx||0);
   let colorIdx=0;
   for(let c=0;c<PALETTE.length;c++){if(!used.includes(c)){colorIdx=c;break;}}
-  const lang=T[currentLang];
-  state.kids.push({id,name:'Child '+(state.kids.length+1),animal:ANIMALS[Math.floor(Math.random()*ANIMALS.length)],colorIdx,tasks:JSON.parse(JSON.stringify(lang.tasks))});
-  fixState();renderSettings();
+  state.kids.push({id,name:'Child '+(state.kids.length+1),animal:ANIMALS[Math.floor(Math.random()*ANIMALS.length)],colorIdx,tasks:JSON.parse(JSON.stringify(T[currentLang].tasks))});
+  fixState(); renderSettings();
 }
 window.addKid=addKid;
 
-function deleteKid(i){
+function deleteKid(i) {
   if(state.kids.length<=1)return;
-  if(!confirm(t('removeKid')+' '+state.kids[i].name+'?'))return;
+  if(!confirm(tr('removeKid')+' '+state.kids[i].name+'?'))return;
   state.kids.splice(i,1);
   if(state.currentKid>=state.kids.length)state.currentKid=0;
   renderSettings();
 }
 window.deleteKid=deleteKid;
 
-function addTask(kidIdx){
+function addTask(kidIdx) {
   state.kids[kidIdx].tasks.push({icon:'⭐',name:'New Task'});
-  fixState();renderSettings();
+  fixState(); renderSettings();
 }
 window.addTask=addTask;
 
-function deleteTask(kidIdx,taskIdx){
+function deleteTask(kidIdx,taskIdx) {
   if(state.kids[kidIdx].tasks.length<=1)return;
   state.kids[kidIdx].tasks.splice(taskIdx,1);
-  fixState();renderSettings();
+  fixState(); renderSettings();
 }
 window.deleteTask=deleteTask;
 
-function openEmojiModal(kidIdx,taskIdx){
+function openEmojiModal(kidIdx,taskIdx) {
   emojiCallback=(emoji)=>{state.kids[kidIdx].tasks[taskIdx].icon=emoji;renderSettings();};
   const grid=document.getElementById('emoji-grid');
   grid.innerHTML='';
@@ -951,7 +1058,7 @@ window.openEmojiModal=openEmojiModal;
 function closeEmojiModal(){document.getElementById('emoji-modal-bg').classList.remove('open');}
 window.closeEmojiModal=closeEmojiModal;
 
-function spawnConfetti(colorIdx){
+function spawnConfetti(colorIdx) {
   const col=PALETTE[colorIdx||0];
   const colors=[col.main,col.dark,'#FFD700','#fff'];
   for(let i=0;i<16;i++){
